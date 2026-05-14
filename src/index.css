@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  color: #0b2147;
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #1f4e94;
+  color: white;
+}
+
+/* Conveyor belt animated stripes */
+.belt-stripes {
+  background-image: repeating-linear-gradient(
+    45deg,
+    #f59e0b 0,
+    #f59e0b 14px,
+    #0b2147 14px,
+    #0b2147 28px
+  );
+  background-size: 60px 60px;
+}
+
+/* Subtle dotted background pattern */
+.bg-dot {
+  background-image: radial-gradient(rgba(8, 26, 56, 0.12) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Glass card */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Marquee */
+.marquee {
+  display: flex;
+  gap: 4rem;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* 3D card hover lift */
+.lift {
+  transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s;
+}
+.lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 60px -22px rgba(8, 26, 56, 0.35);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #f1f5fb; }
+::-webkit-scrollbar-thumb { background: #1f4e94; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #163d77; }
+
+/* Hide scrollbar for horizontal scroll containers */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
