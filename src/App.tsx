@@ -6,6 +6,7 @@ import Products from "./components/Products";
 import Industries from "./components/Industries";
 import Stats from "./components/Stats";
 import WhyChoose from "./components/WhyChoose";
+import QualityWarranty from "./components/QualityWarranty";
 import Process from "./components/Process";
 import Testimonials from "./components/Testimonials";
 import CTA from "./components/CTA";
@@ -25,6 +26,7 @@ export default function App() {
         <Products />
         <Industries />
         <WhyChoose />
+        <QualityWarranty />
         <Process />
         <ClientsMarquee />
         <Testimonials />

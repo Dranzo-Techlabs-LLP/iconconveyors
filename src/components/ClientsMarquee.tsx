@@ -49,6 +49,30 @@ const clients = [
     sub: "Rubber & Equipment",
     color: "from-zinc-700 to-zinc-900",
   },
+  {
+    name: "IIT Chennai",
+    short: "IIT-M",
+    sub: "Research & Academia",
+    color: "from-sky-700 to-blue-900",
+  },
+  {
+    name: "Tube Investments of India",
+    short: "TII",
+    sub: "Engineering · Murugappa",
+    color: "from-cyan-700 to-teal-900",
+  },
+  {
+    name: "Murugappa Group",
+    short: "MURUGAPPA",
+    sub: "Diversified Conglomerate",
+    color: "from-amber-700 to-orange-900",
+  },
+  {
+    name: "C.R.I Pumps",
+    short: "CRI",
+    sub: "Pumps & Motors",
+    color: "from-indigo-700 to-violet-900",
+  },
 ];
 
 export default function ClientsMarquee() {

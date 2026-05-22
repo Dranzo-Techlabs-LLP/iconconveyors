@@ -65,14 +65,14 @@ export default function Footer() {
                 className="flex items-start gap-3 hover:text-accent-400"
               >
                 <Phone className="size-4 mt-0.5 text-accent-400 shrink-0" />
-                +91 88072 09964
+                +91 88072 09964 · +91 74182 77664
               </a>
               <a
-                href="mailto:sales@iconconveyors.com"
+                href="mailto:iconconveyors@gmail.com"
                 className="flex items-start gap-3 hover:text-accent-400 break-all"
               >
                 <Mail className="size-4 mt-0.5 text-accent-400 shrink-0" />
-                sales@iconconveyors.com
+                iconconveyors@gmail.com
               </a>
               <div className="flex items-start gap-3">
                 <MapPin className="size-4 mt-0.5 text-accent-400 shrink-0" />

@@ -104,9 +104,9 @@ export default function Hero() {
             className="mt-10 grid grid-cols-3 gap-6 max-w-md"
           >
             {[
-              { k: "2017", v: "Established" },
-              { k: "35+", v: "Conveyor Models" },
-              { k: "ISO 9001", v: "Certified" },
+              { k: "9+ Yrs", v: "Experience" },
+              { k: "5000+", v: "Projects" },
+              { k: "ISO", v: "Certified" },
             ].map((s) => (
               <motion.div
                 key={s.v}

@@ -47,14 +47,14 @@ export default function CTA() {
                 <div className="font-display text-lg md:text-xl font-semibold">
                   +91 88072 09964
                 </div>
-                <div className="text-xs text-white/55 mt-0.5">
-                  B. Madeshwaran · Proprietor
+                <div className="text-sm text-white/70 mt-0.5">
+                  +91 74182 77664 · B. Madeshwaran
                 </div>
               </div>
             </a>
 
             <a
-              href="mailto:sales@iconconveyors.com"
+              href="mailto:iconconveyors@gmail.com"
               className="flex items-start gap-4 group"
             >
               <div className="size-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center group-hover:bg-accent-500/20 group-hover:border-accent-400 transition-colors shrink-0">
@@ -65,10 +65,10 @@ export default function CTA() {
                   Email
                 </div>
                 <div className="font-display text-lg md:text-xl font-semibold break-all">
-                  sales@iconconveyors.com
+                  iconconveyors@gmail.com
                 </div>
-                <div className="text-xs text-white/55 mt-0.5">
-                  info@iconconveyors.com
+                <div className="text-sm text-white/70 mt-0.5 break-all">
+                  info@iconconveyor.com
                 </div>
               </div>
             </a>
@@ -144,27 +144,55 @@ export default function CTA() {
           </p>
 
           <div className="mt-6 grid sm:grid-cols-2 gap-4">
-            <Field label="Full name" type="text" required name="name" />
-            <Field label="Company" type="text" name="company" />
+            <Field label="Company name" type="text" required name="company" />
+            <Field label="Contact person" type="text" required name="name" />
+            <Field label="Email ID" type="email" required name="email" />
             <Field label="Phone" type="tel" required name="phone" />
-            <Field label="Email" type="email" required name="email" />
           </div>
           <div className="mt-4">
             <Field
-              label="Conveyor type interest"
+              label="Address"
+              name="address"
+              type="text"
+              placeholder="City, State"
+            />
+          </div>
+          <div className="mt-4 grid sm:grid-cols-2 gap-4">
+            <Field
+              label="Product name"
               name="product"
               type="text"
-              placeholder="e.g. Belt Conveyor, Screw Conveyor…"
+              placeholder="e.g. Belt Conveyor"
+            />
+            <Field
+              label="Conveyor type / equipment"
+              name="conveyorType"
+              type="text"
+              placeholder="e.g. Inclined, SS, Modular"
+            />
+          </div>
+          <div className="mt-4 grid sm:grid-cols-2 gap-4">
+            <Field
+              label="Material handling type"
+              name="material"
+              type="text"
+              placeholder="e.g. grain, powder, cartons"
+            />
+            <Field
+              label="Length / Width / Height"
+              name="dimensions"
+              type="text"
+              placeholder="e.g. 6m / 600mm / 1m"
             />
           </div>
           <div className="mt-4">
             <label className="block text-xs uppercase tracking-widest text-white/60 font-semibold mb-2">
-              Tell us about your line
+              Additional requirement details
             </label>
             <textarea
               name="message"
-              rows={4}
-              placeholder="Material, throughput, floor space, timeline…"
+              rows={3}
+              placeholder="Throughput, incline angle, timeline…"
               className="w-full rounded-xl bg-white/5 border border-white/10 focus:border-accent-400 outline-none px-4 py-3 text-white placeholder-white/40"
             />
           </div>
