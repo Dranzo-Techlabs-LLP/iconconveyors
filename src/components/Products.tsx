@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Search } from "lucide-react";
 import { useMemo, useState } from "react";
+import { YoutubeIcon } from "./SocialIcons";
 
 type Category =
   | "All"
@@ -20,15 +21,25 @@ type Product = {
   tag?: string;
 };
 
+// 30-product catalogue, in the exact order of the Icon Conveyors profile.
+// Every image is the client's own product photo supplied in that document.
 const products: Product[] = [
-  // Belt
+  // 1–2 · Bagging / weighing
   {
-    title: "Belt Conveyor System",
-    desc: "Heavy-duty continuous belt system built for high-volume, long-distance transport of bulk material across factories and yards.",
-    img: "/products/belt-conveyor.jpg",
-    category: "Belt",
-    tag: "Most Popular",
+    title: "Double Head Bagging Machine",
+    desc: "High-speed dual-head system for accurate weighing, simultaneous bag filling and higher productivity.",
+    img: "/products/double-head-bagging.jpg",
+    category: "Packaging",
+    tag: "High Speed",
   },
+  {
+    title: "Gross Weigher Machine",
+    desc: "Accurate weighing and filling machine to pack bulk material directly into bags with efficiency and consistency.",
+    img: "/products/gross-weigher.png",
+    category: "Packaging",
+  },
+
+  // 3–8 · Belt
   {
     title: "Aluminium Belt Conveyor",
     desc: "Lightweight modular aluminium profile frame for smooth, efficient material handling and quick customisation.",
@@ -71,11 +82,11 @@ const products: Product[] = [
     tag: "SS 304/316",
   },
 
-  // Screw
+  // 9–12 · Screw
   {
     title: "Screw Conveyor",
     desc: "Helical design for efficient, enclosed transport of bulk material in horizontal, inclined or vertical layouts.",
-    img: "/products/screw-conveyor.jpg",
+    img: "/products/screw-conveyor.png",
     category: "Screw",
   },
   {
@@ -98,13 +109,7 @@ const products: Product[] = [
     tag: "Dust-Free",
   },
 
-  // Roller
-  {
-    title: "Roller Conveyor",
-    desc: "Steel roller bed for cartons, totes and palletised goods — backbone of packaging and warehouse lines.",
-    img: "/products/roller-conveyor.jpg",
-    category: "Roller",
-  },
+  // 13–15 · Roller
   {
     title: "Gravity Roller Conveyor",
     desc: "Simple, cost-effective free-rolling design for smooth manual movement of goods in horizontal or inclined setups.",
@@ -114,23 +119,23 @@ const products: Product[] = [
   {
     title: "Motorized Roller Conveyor",
     desc: "Powered rollers for efficient, automated and controlled movement of goods — reliable material handling.",
-    img: "/products/motorized-roller.webp",
+    img: "/products/motorized-roller.jpg",
     category: "Roller",
     tag: "Powered",
   },
   {
     title: "Flexible Roller Conveyor",
     desc: "Extendable, bendable design moves goods around dynamic spaces and adaptable workflows.",
-    img: "/products/flexible-roller.webp",
+    img: "/products/flexible-roller.jpg",
     category: "Roller",
     tag: "Extendable",
   },
 
-  // Chain
+  // 16–19 · Chain
   {
-    title: "Chain Conveyor",
-    desc: "Heavy-duty chains move pallets, drums and tough industrial loads with reliable, low-maintenance performance.",
-    img: "/products/chain-conveyor.jpg",
+    title: "Drag Chain Conveyor",
+    desc: "Rugged design uses heavy-duty chains for reliable handling of bulk material in horizontal or inclined runs.",
+    img: "/products/drag-chain.jpg",
     category: "Chain",
   },
   {
@@ -141,26 +146,20 @@ const products: Product[] = [
     tag: "SS Hygienic",
   },
   {
-    title: "MS Slat Chain Conveyor",
-    desc: "Sturdy mild-steel slat chain for durable, efficient and smooth transport of heavy industrial loads.",
-    img: "/products/chain-conveyor.jpg",
-    category: "Chain",
-  },
-  {
-    title: "Drag Chain Conveyor",
-    desc: "Rugged design uses heavy-duty chains for reliable handling of bulk material in horizontal or inclined runs.",
-    img: "/products/chain-conveyor.jpg",
-    category: "Chain",
-  },
-  {
-    title: "Vertical Continuous Chain",
+    title: "Vertical Continuous Chain Conveyor",
     desc: "Robust vertical continuous chain conveyor for space-saving, reliable vertical movement in continuous operations.",
-    img: "/products/vertical-chain.webp",
+    img: "/products/vertical-chain.jpg",
     category: "Chain",
     tag: "Space-Saving",
   },
+  {
+    title: "MS Slat Chain Conveyor",
+    desc: "Sturdy mild-steel slat chain for durable, efficient and smooth transport of heavy industrial loads.",
+    img: "/products/ms-slat-chain.jpg",
+    category: "Chain",
+  },
 
-  // Loading
+  // 20–21 · Loading
   {
     title: "Truck Loading Conveyor",
     desc: "Flexible, extendable design for quick, efficient and safe loading or unloading — cuts manual effort and turnaround time.",
@@ -174,76 +173,8 @@ const products: Product[] = [
     img: "/products/bag-stacker.jpg",
     category: "Loading",
   },
-  {
-    title: "Bucket Elevator",
-    desc: "Vertical bucket design for efficient lifting and continuous transport of grains, powders and granules.",
-    img: "/products/bucket-elevator.jpg",
-    category: "Loading",
-    tag: "Vertical Lift",
-  },
 
-  // Packaging
-  {
-    title: "Double Head Bagging Machine",
-    desc: "High-speed dual-head system for accurate weighing, simultaneous bag filling and higher productivity.",
-    img: "/products/bag-stacker.jpg",
-    category: "Packaging",
-    tag: "High Speed",
-  },
-  {
-    title: "Single Head Bagging Machine",
-    desc: "Compact single-head design for fast, accurate, efficient filling and packaging of bulk material bags.",
-    img: "/products/bag-stacker.jpg",
-    category: "Packaging",
-  },
-  {
-    title: "Triple Head Bagging Machine",
-    desc: "High-speed triple-head design for fast, accurate, simultaneous filling of multiple bags in bulk packaging.",
-    img: "/products/bag-stacker.jpg",
-    category: "Packaging",
-    tag: "Max Throughput",
-  },
-  {
-    title: "Augerfiller with FFS Machine",
-    desc: "Form-fill-seal packaging plus auger filler for precise filling of powders and granules in one efficient system.",
-    img: "/products/bag-stacker.jpg",
-    category: "Packaging",
-    tag: "FFS",
-  },
-  {
-    title: "Gross Weigher Machine",
-    desc: "Accurate weighing and filling machine to pack bulk material directly into bags with consistency.",
-    img: "/products/bag-stacker.jpg",
-    category: "Packaging",
-  },
-
-  // Specialty
-  {
-    title: "Z-Type Conveyor",
-    desc: "Cleated belt Z-design for efficient vertical and horizontal transfer of bulk material in limited floor space.",
-    img: "/products/z-type.jpg",
-    category: "Specialty",
-    tag: "Compact",
-  },
-  {
-    title: "90° Curve Conveyor",
-    desc: "Space-saving curve design for smooth, efficient product transfer around corners in material handling systems.",
-    img: "/products/90-curve.webp",
-    category: "Specialty",
-  },
-  {
-    title: "Automatic Segregation Conveyor",
-    desc: "Streamlined sorting and segregation for efficient product separation and material handling automation.",
-    img: "/products/segregation.jpg",
-    category: "Specialty",
-    tag: "Smart Sort",
-  },
-  {
-    title: "Assembly Line Conveyor",
-    desc: "Smooth product flow that boosts efficiency and productivity across manufacturing assembly processes.",
-    img: "/products/assembly-line.jpg",
-    category: "Specialty",
-  },
+  // 22–23 · Mixing / assembly
   {
     title: "Ribbon Mixing Blender",
     desc: "Helical ribbons for fast, uniform mixing of powders, granules and bulk materials across industries.",
@@ -252,19 +183,77 @@ const products: Product[] = [
     tag: "Blender",
   },
   {
-    title: "Vibrating Conveyor",
-    desc: "Controlled vibration moves bulk granular and powdered material with gentle, dust-free handling.",
-    img: "/products/roller-conveyor.jpg",
+    title: "Assembly Line Conveyor",
+    desc: "Smooth product flow that boosts efficiency and productivity across manufacturing assembly processes.",
+    img: "/products/assembly-line.jpg",
+    category: "Specialty",
+  },
+
+  // 24–26 · Curve / Z / elevator
+  {
+    title: "90° Curve Conveyor",
+    desc: "Space-saving curve design for smooth, efficient product transfer around corners in material handling systems.",
+    img: "/products/90-curve.jpg",
     category: "Specialty",
   },
   {
-    title: "Pop-Up Conveyor System",
-    desc: "Pop-up diverter for inline product routing — integrates seamlessly into automated packaging flows.",
+    title: "Z-Type Conveyor",
+    desc: "Cleated belt Z-design for efficient vertical and horizontal transfer of bulk material in limited floor space.",
+    img: "/products/z-type.png",
+    category: "Specialty",
+    tag: "Compact",
+  },
+  {
+    title: "Bucket Elevator",
+    desc: "Vertical bucket design for efficient lifting and continuous transport of grains, powders and granules.",
+    img: "/products/bucket-elevator.png",
+    category: "Loading",
+    tag: "Vertical Lift",
+  },
+
+  // 27–30 · Segregation / bagging
+  {
+    title: "Automatic Segregation Conveyor",
+    desc: "Streamlined sorting and segregation for efficient product separation and material handling automation.",
     img: "/products/segregation.jpg",
     category: "Specialty",
-    tag: "Diverter",
+    tag: "Smart Sort",
+  },
+  {
+    title: "Single Head Bagging Machine",
+    desc: "Compact single-head design for fast, accurate, efficient filling and packaging of bulk material bags.",
+    img: "/products/single-head-bagging.png",
+    category: "Packaging",
+  },
+  {
+    title: "Auger Filler with FFS Machine",
+    desc: "Form-fill-seal packaging plus auger filler for precise filling of powders and granules in one efficient system.",
+    img: "/products/auger-ffs.png",
+    category: "Packaging",
+    tag: "FFS",
+  },
+  {
+    title: "Triple Head Bagging Machine",
+    desc: "High-speed triple-head design for fast, accurate, simultaneous filling of multiple bags in bulk packaging.",
+    img: "/products/triple-head-bagging.jpg",
+    category: "Packaging",
+    tag: "Max Throughput",
   },
 ];
+
+// YouTube demo links per product (client-specified). Only these products show a
+// hover video; all other products intentionally have none.
+const videos: Record<string, string> = {
+  "Screw Conveyor": "https://youtu.be/aQP6mVzEKuE",
+  "Cleated Belt Conveyor": "https://youtu.be/1y48s9SY_Rs",
+  "Inclined Belt Conveyor": "https://youtu.be/maaUjHvdSTo",
+  "Flexible Roller Conveyor": "https://youtu.be/GC18ZJyfZN0",
+  "SS Slat Chain Conveyor": "https://youtu.be/bRdhbXH6mEk",
+  "MS Slat Chain Conveyor": "https://youtu.be/U40q8TWQ-4Y",
+  "Truck Loading Conveyor": "https://youtu.be/_JZjS8YqKLI",
+  "Z-Type Conveyor": "https://youtu.be/4mJN7FZXdlA",
+  "Automatic Segregation Conveyor": "https://youtu.be/B5p7TW_8_XA",
+};
 
 const categories: Category[] = [
   "All",
@@ -372,7 +361,9 @@ export default function Products() {
 
         <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
-            {filtered.map((p, i) => (
+            {filtered.map((p, i) => {
+              const video = videos[p.title];
+              return (
               <motion.article
                 key={p.title}
                 layout
@@ -387,14 +378,14 @@ export default function Products() {
                 whileHover={{ y: -6 }}
                 className="group relative overflow-hidden rounded-2xl bg-white border border-brand-100 shadow-soft hover:shadow-[0_28px_60px_-22px_rgba(8,26,56,0.35)] transition-shadow"
               >
-                <div className="relative h-56 overflow-hidden bg-brand-50">
+                <div className="relative h-60 overflow-hidden bg-gradient-to-b from-white to-brand-50">
                   <img
                     src={p.img}
                     alt={p.title}
                     loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-110"
+                    className="w-full h-full object-contain p-3 transition-transform duration-[900ms] ease-out group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-brand-950/85 via-brand-900/25 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-brand-950/80 via-brand-900/20 to-transparent pointer-events-none" />
                   {p.tag && (
                     <span className="absolute top-3 left-3 text-[11px] font-bold uppercase tracking-wider bg-accent-500 text-brand-950 px-2.5 py-1 rounded-full shadow-md">
                       {p.tag}
@@ -403,9 +394,26 @@ export default function Products() {
                   <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wider bg-white/90 text-brand-700 px-2.5 py-1 rounded-full">
                     {p.category}
                   </span>
-                  <h3 className="absolute bottom-3 left-4 right-4 font-display text-xl font-bold text-white drop-shadow-lg">
+                  <h3 className="absolute bottom-3 left-4 right-4 font-display text-xl font-bold text-white drop-shadow-lg group-hover:opacity-0 transition-opacity">
                     {p.title}
                   </h3>
+                  {video && (
+                    <a
+                      href={video}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      aria-label={`Watch ${p.title} video on YouTube`}
+                      className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-brand-950/55 opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <span className="inline-flex items-center gap-2 rounded-full bg-[#FF0000] text-white font-bold px-5 py-2.5 text-sm shadow-lg">
+                        <YoutubeIcon className="size-5" /> Watch video
+                      </span>
+                      <span className="px-4 text-center font-display text-base font-bold text-white drop-shadow">
+                        {p.title}
+                      </span>
+                    </a>
+                  )}
                 </div>
                 <div className="p-5">
                   <p className="text-sm text-brand-800/75 leading-relaxed line-clamp-3 min-h-[60px]">
@@ -425,7 +433,8 @@ export default function Products() {
                   </div>
                 </div>
               </motion.article>
-            ))}
+              );
+            })}
           </AnimatePresence>
         </div>
 

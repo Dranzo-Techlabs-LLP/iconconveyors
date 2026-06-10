@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 const clients = [
   {
     name: "Kanan Devan Hills Tea Plantation",
-    short: "KDH",
+    short: "KDHP",
     sub: "Munnar · Tea Plantations",
     color: "from-emerald-600 to-emerald-800",
   },

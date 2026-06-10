@@ -12,8 +12,8 @@ const cards = [
   },
   {
     icon: Clock,
-    title: "9+ Years Experience",
-    text: "Over nine years designing, manufacturing, supplying and installing industrial material-handling systems and conveyor solutions — projects executed reliably across food, packaging, manufacturing and engineering sectors.",
+    title: "10+ Years Experience",
+    text: "Over ten years designing, manufacturing, supplying and installing industrial material-handling systems and conveyor solutions — projects executed reliably across food, packaging, manufacturing and engineering sectors.",
     badge: "Since 2017",
   },
   {

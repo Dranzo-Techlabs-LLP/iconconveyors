@@ -104,7 +104,7 @@ export default function Hero() {
             className="mt-10 grid grid-cols-3 gap-6 max-w-md"
           >
             {[
-              { k: "9+ Yrs", v: "Experience" },
+              { k: "10+ Yrs", v: "Experience" },
               { k: "5000+", v: "Projects" },
               { k: "ISO", v: "Certified" },
             ].map((s) => (

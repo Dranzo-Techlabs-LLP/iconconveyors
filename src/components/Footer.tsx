@@ -72,12 +72,18 @@ export default function Footer() {
                 className="flex items-start gap-3 hover:text-accent-400 break-all"
               >
                 <Mail className="size-4 mt-0.5 text-accent-400 shrink-0" />
-                iconconveyors@gmail.com
+                <span>
+                  iconconveyors@gmail.com
+                  <br />
+                  info@iconconveyor.com
+                </span>
               </a>
               <div className="flex items-start gap-3">
                 <MapPin className="size-4 mt-0.5 text-accent-400 shrink-0" />
                 <span>
                   S.F.No. 109/1A, 1B, Bodipalayam Post,
+                  <br />
+                  Seerapalayam, Near Vedanta Academy,
                   <br />
                   Madukkarai, Coimbatore — 641105, TN
                 </span>
