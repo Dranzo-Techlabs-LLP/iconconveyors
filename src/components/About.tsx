@@ -7,17 +7,11 @@ import {
   Target,
   Eye,
 } from "lucide-react";
-
-const strengths = [
-  "Experienced and skilled workforce",
-  "Advanced manufacturing facility in Coimbatore",
-  "Customized conveyor solutions for every line",
-  "Timely project execution & dispatch",
-  "Competitive pricing without compromise on quality",
-  "ISO 9001:2015 certified quality systems",
-];
+import { useContent } from "../data/ContentContext";
 
 export default function About() {
+  const c = useContent().about;
+  const strengths = c.strengths;
   return (
     <section id="about" className="relative py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-5 lg:px-8 grid lg:grid-cols-2 gap-14 items-center">
@@ -103,27 +97,19 @@ export default function About() {
           className="order-1 lg:order-2"
         >
           <div className="inline-flex items-center gap-2 rounded-full bg-brand-50 border border-brand-100 px-4 py-1.5 text-sm font-semibold text-brand-700">
-            <Wrench className="size-4 text-accent-500" /> About Icon Conveyors
+            <Wrench className="size-4 text-accent-500" /> {c.badge}
           </div>
 
           <h2 className="mt-5 font-display text-3xl md:text-5xl font-bold text-brand-900 leading-tight">
-            Manufacturer of all types of{" "}
-            <span className="text-brand-500">conveyors & packaging machines</span>
+            {c.headingLead}{" "}
+            <span className="text-brand-500">{c.headingHighlight}</span>
           </h2>
 
           <p className="mt-5 text-brand-800/75 text-lg leading-relaxed">
-            Icon Conveyors is a trusted manufacturer and supplier of conveyor
-            systems and material handling equipment, headquartered in
-            Coimbatore, Tamil Nadu. Established in 2017 as a sole
-            proprietorship, we specialise in high-quality conveyor solutions
-            designed to improve industrial productivity and operational
-            efficiency.
+            {c.paragraph1}
           </p>
           <p className="mt-4 text-brand-800/75 leading-relaxed">
-            With a dedicated, skilled team and a technically advanced
-            manufacturing unit, we serve food processing, packaging,
-            manufacturing, engineering and material-handling industries — every
-            system precision-built to meet customer-specific needs.
+            {c.paragraph2}
           </p>
 
           <ul className="mt-7 grid sm:grid-cols-2 gap-2.5">
@@ -168,11 +154,7 @@ export default function About() {
             <h3 className="mt-5 font-display text-2xl md:text-3xl font-bold">
               Our Mission
             </h3>
-            <p className="mt-3 text-white/80 leading-relaxed">
-              To provide high-quality, innovative and cost-effective conveyor
-              systems that enhance productivity and meet the evolving needs of
-              our customers across every industry we serve.
-            </p>
+            <p className="mt-3 text-white/80 leading-relaxed">{c.mission}</p>
           </div>
         </motion.div>
 
@@ -191,12 +173,7 @@ export default function About() {
             <h3 className="mt-5 font-display text-2xl md:text-3xl font-bold">
               Our Vision
             </h3>
-            <p className="mt-3 text-brand-900/85 leading-relaxed">
-              To become a leading name in the conveyor manufacturing industry
-              by delivering reliable material handling solutions and building
-              long-term customer relationships rooted in trust and engineering
-              excellence.
-            </p>
+            <p className="mt-3 text-brand-900/85 leading-relaxed">{c.vision}</p>
           </div>
         </motion.div>
       </div>

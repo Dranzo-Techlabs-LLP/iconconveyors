@@ -1,0 +1,308 @@
+{
+  "hero": {
+    "badge": "ISO 9001:2015 Certified · Coimbatore · Est. 2017",
+    "titleLine1": "Optimising your",
+    "titleHighlight": "material flow",
+    "titleLine2": "with industrial conveyors.",
+    "paragraph": "Trusted manufacturer of belt, screw, roller, slat-chain, bucket, loading and packaging conveyors. Engineered in our Coimbatore plant for food processing, packaging, manufacturing, engineering and material-handling industries.",
+    "primaryCta": "Explore Products",
+    "secondaryCta": "Get a Quote",
+    "stats": [
+      {
+        "k": "10+ Yrs",
+        "v": "Experience"
+      },
+      {
+        "k": "5000+",
+        "v": "Projects"
+      },
+      {
+        "k": "ISO",
+        "v": "Certified"
+      }
+    ]
+  },
+  "stats": [
+    {
+      "value": 10,
+      "suffix": "+",
+      "label": "Years of Experience"
+    },
+    {
+      "value": 5000,
+      "suffix": "+",
+      "label": "Projects Executed"
+    },
+    {
+      "value": 500,
+      "suffix": "+",
+      "label": "Clients Served"
+    },
+    {
+      "value": 40,
+      "suffix": "+",
+      "label": "Conveyor Models"
+    }
+  ],
+  "about": {
+    "badge": "About Icon Conveyors",
+    "headingLead": "Manufacturer of all types of",
+    "headingHighlight": "conveyors & packaging machines",
+    "paragraph1": "Icon Conveyors is a trusted manufacturer and supplier of conveyor systems and material handling equipment, headquartered in Coimbatore, Tamil Nadu. Established in 2017 as a sole proprietorship, we specialise in high-quality conveyor solutions designed to improve industrial productivity and operational efficiency.",
+    "paragraph2": "With a dedicated, skilled team and a technically advanced manufacturing unit, we serve food processing, packaging, manufacturing, engineering and material-handling industries — every system precision-built to meet customer-specific needs.",
+    "strengths": [
+      "Experienced and skilled workforce",
+      "Advanced manufacturing facility in Coimbatore",
+      "Customized conveyor solutions for every line",
+      "Timely project execution & dispatch",
+      "Competitive pricing without compromise on quality",
+      "ISO 9001:2015 certified quality systems"
+    ],
+    "mission": "To provide high-quality, innovative and cost-effective conveyor systems that enhance productivity and meet the evolving needs of our customers across every industry we serve.",
+    "vision": "To become a leading name in the conveyor manufacturing industry by delivering reliable material handling solutions and building long-term customer relationships rooted in trust and engineering excellence."
+  },
+  "industries": {
+    "badge": "Industries We Serve",
+    "headingLead": "One conveyor partner.",
+    "headingHighlight": "Every industry.",
+    "subheading": "From food-grade hygiene to heavy-engineering durability — we engineer the right machine for the right floor.",
+    "items": [
+      {
+        "title": "Food Processing",
+        "desc": "Hygienic SS belt, modular belt and slat-chain conveyors for bakeries, dairies, poultry and ready-meal lines."
+      },
+      {
+        "title": "Packaging",
+        "desc": "Roller, modular belt, bagging machines and gross weighers feeding pack-out, sealing and palletising stations."
+      },
+      {
+        "title": "Manufacturing",
+        "desc": "Assembly-line conveyors, slat-chain and aluminium-profile belts engineered for high-volume production floors."
+      },
+      {
+        "title": "Engineering",
+        "desc": "Custom material-handling solutions for foundry, automotive, machine-shop and heavy engineering plants."
+      },
+      {
+        "title": "Material Handling",
+        "desc": "Truck loading, bag stacker, bucket elevators and segregation lines for warehouses and logistics hubs."
+      },
+      {
+        "title": "Agriculture & Allied",
+        "desc": "Cleated and screw conveyors moving grain, seed, feed and fertiliser at farm-to-mill scale."
+      }
+    ]
+  },
+  "whyChoose": {
+    "badge": "Why Icon Conveyors",
+    "headingLead": "Six reasons plants across India",
+    "headingHighlight": "trust our line.",
+    "items": [
+      {
+        "title": "Custom Engineering",
+        "text": "Every conveyor is sized to your material, throughput and floor — no off-the-shelf compromise."
+      },
+      {
+        "title": "Built to Last",
+        "text": "Heavy-gauge frames, premium pulleys and food-grade or abrasion-grade belt options for every application."
+      },
+      {
+        "title": "Low Maintenance",
+        "text": "Smart access panels, sealed bearings and modular sections reduce downtime to a minimum."
+      },
+      {
+        "title": "Precise Installation",
+        "text": "Site survey, fabrication, install and commissioning handled end-to-end by our in-house team."
+      },
+      {
+        "title": "Pan-India Delivery",
+        "text": "Dispatch from Coimbatore to every state with logistics and on-site rigging support."
+      },
+      {
+        "title": "Lifetime Support",
+        "text": "AMC contracts, rapid spares and an engineer-on-call for every system we ship."
+      }
+    ]
+  },
+  "quality": {
+    "badge": "Quality · Experience · Warranty",
+    "headingLead": "Built to a standard you can",
+    "headingHighlight": "depend on.",
+    "cards": [
+      {
+        "title": "Quality Policy",
+        "text": "We deliver products and services that meet or exceed customer expectations — strict quality control at every stage of production, ISO compliance, and continuous improvement in process, technology and workforce skills.",
+        "badge": "ISO Certified"
+      },
+      {
+        "title": "10+ Years Experience",
+        "text": "Over ten years designing, manufacturing, supplying and installing industrial material-handling systems and conveyor solutions — projects executed reliably across food, packaging, manufacturing and engineering sectors.",
+        "badge": "Since 2017"
+      },
+      {
+        "title": "One-Year Warranty",
+        "text": "Every product carries a one-year warranty against manufacturing defects and workmanship under normal operating conditions. Any proven defect is repaired or replaced as per company policy.",
+        "badge": "12 Months"
+      }
+    ]
+  },
+  "clients": {
+    "eyebrow": "Our Customers",
+    "heading": "Trusted by industry leaders across India",
+    "items": [
+      {
+        "name": "Kanan Devan Hills Plantation",
+        "short": "KDHP",
+        "sub": "Munnar · Tea Plantations"
+      },
+      {
+        "name": "Tamil Nadu Newsprint & Papers",
+        "short": "TNPL",
+        "sub": "Paper & Newsprint"
+      },
+      {
+        "name": "Pricol Pvt Ltd",
+        "short": "PRICOL",
+        "sub": "Automotive Components"
+      },
+      {
+        "name": "ST Courier",
+        "short": "ST",
+        "sub": "Logistics & Courier"
+      },
+      {
+        "name": "Saint-Gobain",
+        "short": "SG",
+        "sub": "Glass & Materials"
+      },
+      {
+        "name": "Suguna Foods",
+        "short": "SUGUNA",
+        "sub": "Poultry & Food"
+      },
+      {
+        "name": "ISF Pvt Ltd",
+        "short": "ISF",
+        "sub": "Industrial Solutions"
+      },
+      {
+        "name": "ELGI Rubber",
+        "short": "ELGI",
+        "sub": "Rubber & Equipment"
+      },
+      {
+        "name": "IIT Chennai",
+        "short": "IIT-M",
+        "sub": "Research & Academia"
+      },
+      {
+        "name": "Tube Investments of India",
+        "short": "TII",
+        "sub": "Engineering · Murugappa"
+      },
+      {
+        "name": "Murugappa Group",
+        "short": "MURUGAPPA",
+        "sub": "Diversified Conglomerate"
+      },
+      {
+        "name": "C.R.I Pumps",
+        "short": "CRI",
+        "sub": "Pumps & Motors"
+      }
+    ]
+  },
+  "testimonials": {
+    "eyebrow": "What clients say",
+    "headingLead": "Quiet conveyors.",
+    "headingHighlight": "Loud results.",
+    "items": [
+      {
+        "quote": "Icon's modular belt line replaced two manual stations on our poultry floor. Throughput jumped 32% in the first month — and zero hygiene complaints since.",
+        "name": "Karthik R.",
+        "role": "Plant Head, Food Processing"
+      },
+      {
+        "quote": "We needed a bucket elevator with a 14-metre lift and zero spillage. They designed, built and commissioned it in under 8 weeks. Outstanding.",
+        "name": "Suresh N.",
+        "role": "Operations Manager, Cement"
+      },
+      {
+        "quote": "The screw conveyor handling our fertiliser blend has been running 18 months without a single service call. That's engineering you can trust.",
+        "name": "Vignesh S.",
+        "role": "Maintenance Lead, Agri-Inputs"
+      }
+    ]
+  },
+  "contact": {
+    "badge": "Let's talk",
+    "headingLead": "Ready to optimise your",
+    "headingHighlight": "material flow?",
+    "paragraph": "Share a quick brief — material, throughput and floor space — and our engineers will revert in 24 hours with a budgetary proposal and layout sketch.",
+    "phones": [
+      "+91 88072 09964",
+      "+91 74182 77664"
+    ],
+    "contactPerson": "B. Madeshwaran",
+    "emails": [
+      "iconconveyors@gmail.com",
+      "info@iconconveyor.com"
+    ],
+    "addressTitle": "S.F.No. 109/1A, 1B, Bodipalayam Post",
+    "addressLines": [
+      "Near Vedanta Academy, Seerapalayam,",
+      "Madukkarai, Coimbatore — 641105, Tamil Nadu, India"
+    ],
+    "gstin": "33BXBPM6357D1ZN",
+    "iso": "ISO 9001:2015 Certified Company",
+    "mapEmbedQuery": "Madukkarai, Coimbatore, Tamil Nadu 641105",
+    "whatsapp": "918807209964"
+  },
+  "footer": {
+    "blurb": "Trusted Coimbatore-based manufacturer of conveyor systems and packaging machines. Optimising material flow for India's industries since 2017 · ISO 9001:2015 certified.",
+    "phones": [
+      "+91 88072 09964",
+      "+91 74182 77664"
+    ],
+    "email": "iconconveyors@gmail.com",
+    "email2": "info@iconconveyor.com",
+    "addressLines": [
+      "S.F.No. 109/1A, 1B, Bodipalayam Post,",
+      "Seerapalayam, Near Vedanta Academy,",
+      "Madukkarai, Coimbatore — 641105, TN"
+    ],
+    "gstin": "33BXBPM6357D1ZN",
+    "productLinks": [
+      "Belt Conveyor",
+      "Screw Conveyor",
+      "Roller Conveyor",
+      "Slat Chain Conveyor",
+      "Bucket Elevator",
+      "Truck Loading",
+      "Bagging Machines",
+      "Modular Belt"
+    ],
+    "industryLinks": [
+      "Food Processing",
+      "Packaging",
+      "Manufacturing",
+      "Engineering",
+      "Material Handling",
+      "Agriculture"
+    ],
+    "companyLinks": [
+      "About",
+      "Mission & Vision",
+      "Customers",
+      "Process",
+      "Contact"
+    ],
+    "social": {
+      "facebook": "#",
+      "linkedin": "#",
+      "instagram": "#",
+      "youtube": "#",
+      "whatsapp": "https://wa.me/918807209964"
+    }
+  }
+}

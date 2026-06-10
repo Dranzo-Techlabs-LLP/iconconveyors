@@ -1,278 +1,33 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Search } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { YoutubeIcon } from "./SocialIcons";
+import {
+  CATEGORIES,
+  defaultProducts,
+  fetchProducts,
+  type Category,
+  type Product,
+} from "../data/products";
 
-type Category =
-  | "All"
-  | "Belt"
-  | "Screw"
-  | "Roller"
-  | "Chain"
-  | "Loading"
-  | "Packaging"
-  | "Specialty";
-
-type Product = {
-  title: string;
-  desc: string;
-  img: string;
-  category: Exclude<Category, "All">;
-  tag?: string;
-};
-
-// 30-product catalogue, in the exact order of the Icon Conveyors profile.
-// Every image is the client's own product photo supplied in that document.
-const products: Product[] = [
-  // 1–2 · Bagging / weighing
-  {
-    title: "Double Head Bagging Machine",
-    desc: "High-speed dual-head system for accurate weighing, simultaneous bag filling and higher productivity.",
-    img: "/products/double-head-bagging.jpg",
-    category: "Packaging",
-    tag: "High Speed",
-  },
-  {
-    title: "Gross Weigher Machine",
-    desc: "Accurate weighing and filling machine to pack bulk material directly into bags with efficiency and consistency.",
-    img: "/products/gross-weigher.png",
-    category: "Packaging",
-  },
-
-  // 3–8 · Belt
-  {
-    title: "Aluminium Belt Conveyor",
-    desc: "Lightweight modular aluminium profile frame for smooth, efficient material handling and quick customisation.",
-    img: "/products/aluminium-belt.jpg",
-    category: "Belt",
-    tag: "Modular",
-  },
-  {
-    title: "Cleated Belt Conveyor",
-    desc: "Raised cleats on the belt move materials up steep inclines without sliding or spillage.",
-    img: "/products/cleated-belt.jpg",
-    category: "Belt",
-    tag: "Incline",
-  },
-  {
-    title: "Side Wall Cleated Conveyor",
-    desc: "Flexible sidewalls plus cleats deliver spillage-free handling of bulk material at steep or vertical angles.",
-    img: "/products/sidewall-cleated.jpg",
-    category: "Belt",
-    tag: "Vertical",
-  },
-  {
-    title: "Modular Belt Conveyor",
-    desc: "Exceptional flexibility for hygienic food, pharma and manufacturing lines — modular plastic belt with easy section replacement.",
-    img: "/products/modular-belt.jpg",
-    category: "Belt",
-    tag: "Food Grade",
-  },
-  {
-    title: "Inclined Belt Conveyor",
-    desc: "Sidewalls and cleats for secure, efficient transport of bulk material at steep angles without spillage.",
-    img: "/products/inclined-belt.jpg",
-    category: "Belt",
-  },
-  {
-    title: "SS Belt Conveyor",
-    desc: "Stainless-steel frame and belt — hygienic, corrosion-resistant, ideal for food, pharma and cleanroom applications.",
-    img: "/products/ss-belt.jpg",
-    category: "Belt",
-    tag: "SS 304/316",
-  },
-
-  // 9–12 · Screw
-  {
-    title: "Screw Conveyor",
-    desc: "Helical design for efficient, enclosed transport of bulk material in horizontal, inclined or vertical layouts.",
-    img: "/products/screw-conveyor.png",
-    category: "Screw",
-  },
-  {
-    title: "Inclined Screw Conveyor",
-    desc: "Enclosed helical transport of bulk material at upward angles — sealed against dust and spillage.",
-    img: "/products/inclined-screw.jpg",
-    category: "Screw",
-  },
-  {
-    title: "U-Trough Screw Conveyor",
-    desc: "Robust U-trough construction for smooth, efficient handling of bulk material in horizontal or slight incline.",
-    img: "/products/u-trough-screw.jpg",
-    category: "Screw",
-  },
-  {
-    title: "Pipe Type Screw Conveyor",
-    desc: "Sealed tubular design for safe, dust-free, efficient transport — horizontal, inclined or vertical.",
-    img: "/products/pipe-screw.jpg",
-    category: "Screw",
-    tag: "Dust-Free",
-  },
-
-  // 13–15 · Roller
-  {
-    title: "Gravity Roller Conveyor",
-    desc: "Simple, cost-effective free-rolling design for smooth manual movement of goods in horizontal or inclined setups.",
-    img: "/products/gravity-roller.jpg",
-    category: "Roller",
-  },
-  {
-    title: "Motorized Roller Conveyor",
-    desc: "Powered rollers for efficient, automated and controlled movement of goods — reliable material handling.",
-    img: "/products/motorized-roller.jpg",
-    category: "Roller",
-    tag: "Powered",
-  },
-  {
-    title: "Flexible Roller Conveyor",
-    desc: "Extendable, bendable design moves goods around dynamic spaces and adaptable workflows.",
-    img: "/products/flexible-roller.jpg",
-    category: "Roller",
-    tag: "Extendable",
-  },
-
-  // 16–19 · Chain
-  {
-    title: "Drag Chain Conveyor",
-    desc: "Rugged design uses heavy-duty chains for reliable handling of bulk material in horizontal or inclined runs.",
-    img: "/products/drag-chain.jpg",
-    category: "Chain",
-  },
-  {
-    title: "SS Slat Chain Conveyor",
-    desc: "Stainless-steel slat chain for hygienic, durable, smooth transport of heavy loads in food, pharma and packaging.",
-    img: "/products/ss-slat-chain.jpg",
-    category: "Chain",
-    tag: "SS Hygienic",
-  },
-  {
-    title: "Vertical Continuous Chain Conveyor",
-    desc: "Robust vertical continuous chain conveyor for space-saving, reliable vertical movement in continuous operations.",
-    img: "/products/vertical-chain.jpg",
-    category: "Chain",
-    tag: "Space-Saving",
-  },
-  {
-    title: "MS Slat Chain Conveyor",
-    desc: "Sturdy mild-steel slat chain for durable, efficient and smooth transport of heavy industrial loads.",
-    img: "/products/ms-slat-chain.jpg",
-    category: "Chain",
-  },
-
-  // 20–21 · Loading
-  {
-    title: "Truck Loading Conveyor",
-    desc: "Flexible, extendable design for quick, efficient and safe loading or unloading — cuts manual effort and turnaround time.",
-    img: "/products/truck-loading.jpg",
-    category: "Loading",
-    tag: "Logistics",
-  },
-  {
-    title: "Bag Stacker Conveyor",
-    desc: "Movable, height-adjustable conveyor for efficient stacking and handling of bags at varying heights.",
-    img: "/products/bag-stacker.jpg",
-    category: "Loading",
-  },
-
-  // 22–23 · Mixing / assembly
-  {
-    title: "Ribbon Mixing Blender",
-    desc: "Helical ribbons for fast, uniform mixing of powders, granules and bulk materials across industries.",
-    img: "/products/ribbon-blender.jpg",
-    category: "Specialty",
-    tag: "Blender",
-  },
-  {
-    title: "Assembly Line Conveyor",
-    desc: "Smooth product flow that boosts efficiency and productivity across manufacturing assembly processes.",
-    img: "/products/assembly-line.jpg",
-    category: "Specialty",
-  },
-
-  // 24–26 · Curve / Z / elevator
-  {
-    title: "90° Curve Conveyor",
-    desc: "Space-saving curve design for smooth, efficient product transfer around corners in material handling systems.",
-    img: "/products/90-curve.jpg",
-    category: "Specialty",
-  },
-  {
-    title: "Z-Type Conveyor",
-    desc: "Cleated belt Z-design for efficient vertical and horizontal transfer of bulk material in limited floor space.",
-    img: "/products/z-type.png",
-    category: "Specialty",
-    tag: "Compact",
-  },
-  {
-    title: "Bucket Elevator",
-    desc: "Vertical bucket design for efficient lifting and continuous transport of grains, powders and granules.",
-    img: "/products/bucket-elevator.png",
-    category: "Loading",
-    tag: "Vertical Lift",
-  },
-
-  // 27–30 · Segregation / bagging
-  {
-    title: "Automatic Segregation Conveyor",
-    desc: "Streamlined sorting and segregation for efficient product separation and material handling automation.",
-    img: "/products/segregation.jpg",
-    category: "Specialty",
-    tag: "Smart Sort",
-  },
-  {
-    title: "Single Head Bagging Machine",
-    desc: "Compact single-head design for fast, accurate, efficient filling and packaging of bulk material bags.",
-    img: "/products/single-head-bagging.png",
-    category: "Packaging",
-  },
-  {
-    title: "Auger Filler with FFS Machine",
-    desc: "Form-fill-seal packaging plus auger filler for precise filling of powders and granules in one efficient system.",
-    img: "/products/auger-ffs.png",
-    category: "Packaging",
-    tag: "FFS",
-  },
-  {
-    title: "Triple Head Bagging Machine",
-    desc: "High-speed triple-head design for fast, accurate, simultaneous filling of multiple bags in bulk packaging.",
-    img: "/products/triple-head-bagging.jpg",
-    category: "Packaging",
-    tag: "Max Throughput",
-  },
-];
-
-// YouTube demo links per product (client-specified). Only these products show a
-// hover video; all other products intentionally have none.
-const videos: Record<string, string> = {
-  "Screw Conveyor": "https://youtu.be/aQP6mVzEKuE",
-  "Cleated Belt Conveyor": "https://youtu.be/1y48s9SY_Rs",
-  "Inclined Belt Conveyor": "https://youtu.be/maaUjHvdSTo",
-  "Flexible Roller Conveyor": "https://youtu.be/GC18ZJyfZN0",
-  "SS Slat Chain Conveyor": "https://youtu.be/bRdhbXH6mEk",
-  "MS Slat Chain Conveyor": "https://youtu.be/U40q8TWQ-4Y",
-  "Truck Loading Conveyor": "https://youtu.be/_JZjS8YqKLI",
-  "Z-Type Conveyor": "https://youtu.be/4mJN7FZXdlA",
-  "Automatic Segregation Conveyor": "https://youtu.be/B5p7TW_8_XA",
-};
-
-const categories: Category[] = [
-  "All",
-  "Belt",
-  "Screw",
-  "Roller",
-  "Chain",
-  "Loading",
-  "Packaging",
-  "Specialty",
-];
+type Filter = "All" | Category;
+const filters: Filter[] = ["All", ...CATEGORIES];
 
 export default function Products() {
-  const [active, setActive] = useState<Category>("All");
+  const [items, setItems] = useState<Product[]>(defaultProducts);
+  const [active, setActive] = useState<Filter>("All");
   const [query, setQuery] = useState("");
+
+  // Pick up live catalogue (admin edits) when the API is running.
+  useEffect(() => {
+    fetchProducts().then((d) => {
+      if (d) setItems(d);
+    });
+  }, []);
 
   const filtered = useMemo(
     () =>
-      products.filter((p) => {
+      items.filter((p) => {
         const inCat = active === "All" || p.category === active;
         const inQ =
           !query.trim() ||
@@ -280,7 +35,7 @@ export default function Products() {
           p.desc.toLowerCase().includes(query.toLowerCase());
         return inCat && inQ;
       }),
-    [active, query]
+    [items, active, query]
   );
 
   return (
@@ -300,7 +55,7 @@ export default function Products() {
             className="inline-flex items-center gap-2 rounded-full bg-white border border-brand-100 px-4 py-1.5 text-sm font-semibold text-brand-700 shadow-soft"
           >
             <span className="size-1.5 rounded-full bg-accent-500" />
-            Our Products · {products.length} Systems
+            Our Products · {items.length} Systems
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -327,7 +82,7 @@ export default function Products() {
         {/* Filters */}
         <div className="mt-12 flex flex-col md:flex-row md:items-center gap-4 justify-between">
           <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-            {categories.map((c) => (
+            {filters.map((c) => (
               <button
                 key={c}
                 onClick={() => setActive(c)}
@@ -361,11 +116,9 @@ export default function Products() {
 
         <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
-            {filtered.map((p, i) => {
-              const video = videos[p.title];
-              return (
+            {filtered.map((p, i) => (
               <motion.article
-                key={p.title}
+                key={p.id}
                 layout
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -397,9 +150,9 @@ export default function Products() {
                   <h3 className="absolute bottom-3 left-4 right-4 font-display text-xl font-bold text-white drop-shadow-lg group-hover:opacity-0 transition-opacity">
                     {p.title}
                   </h3>
-                  {video && (
+                  {p.video && (
                     <a
-                      href={video}
+                      href={p.video}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
@@ -433,8 +186,7 @@ export default function Products() {
                   </div>
                 </div>
               </motion.article>
-              );
-            })}
+            ))}
           </AnimatePresence>
         </div>
 

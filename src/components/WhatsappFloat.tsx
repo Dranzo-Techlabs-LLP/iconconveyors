@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { WhatsappIcon } from "./SocialIcons";
+import { useContent } from "../data/ContentContext";
 
 export default function WhatsappFloat() {
+  const wa = useContent().contact.whatsapp;
   return (
     <motion.a
       initial={{ scale: 0, opacity: 0 }}
@@ -9,7 +11,7 @@ export default function WhatsappFloat() {
       transition={{ delay: 1.4, type: "spring", stiffness: 260, damping: 20 }}
       whileHover={{ scale: 1.08 }}
       whileTap={{ scale: 0.95 }}
-      href="https://wa.me/918807209964?text=Hi%20Icon%20Conveyors%2C%20I%27d%20like%20a%20quote%20for"
+      href={`https://wa.me/${wa}?text=Hi%20Icon%20Conveyors%2C%20I%27d%20like%20a%20quote%20for`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"

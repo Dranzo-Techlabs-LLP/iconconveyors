@@ -1,12 +1,6 @@
 import { motion, useInView, animate } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-
-const stats = [
-  { value: 10, suffix: "+", label: "Years of Experience" },
-  { value: 5000, suffix: "+", label: "Projects Executed" },
-  { value: 500, suffix: "+", label: "Clients Served" },
-  { value: 40, suffix: "+", label: "Conveyor Models" },
-];
+import { useContent } from "../data/ContentContext";
 
 function Counter({ to, suffix }: { to: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -33,6 +27,7 @@ function Counter({ to, suffix }: { to: number; suffix: string }) {
 }
 
 export default function Stats() {
+  const stats = useContent().stats;
   return (
     <section className="relative py-16 md:py-20 bg-white">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">

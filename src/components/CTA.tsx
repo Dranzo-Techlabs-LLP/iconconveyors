@@ -2,9 +2,14 @@ import { motion } from "framer-motion";
 import { ArrowRight, Mail, Phone, MapPin, FileText, User } from "lucide-react";
 import { useState } from "react";
 import { WhatsappIcon } from "./SocialIcons";
+import { useContent } from "../data/ContentContext";
 
 export default function CTA() {
+  const c = useContent().contact;
   const [sent, setSent] = useState(false);
+  const telHref = "tel:" + (c.phones[0] || "").replace(/[^0-9+]/g, "");
+  const waHref = `https://wa.me/${c.whatsapp}?text=Hi%20Icon%20Conveyors%2C%20I%27d%20like%20a%20quote%20for`;
+  const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(c.mapEmbedQuery)}&output=embed`;
   return (
     <section
       id="contact"
@@ -20,23 +25,16 @@ export default function CTA() {
           viewport={{ once: true }}
         >
           <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-1.5 text-sm font-semibold">
-            Let's talk
+            {c.badge}
           </div>
           <h2 className="mt-5 font-display text-3xl md:text-5xl font-bold leading-tight">
-            Ready to optimise your{" "}
-            <span className="text-accent-400">material flow?</span>
+            {c.headingLead}{" "}
+            <span className="text-accent-400">{c.headingHighlight}</span>
           </h2>
-          <p className="mt-5 text-white/75 text-lg max-w-xl">
-            Share a quick brief — material, throughput and floor space — and
-            our engineers will revert in 24 hours with a budgetary proposal and
-            layout sketch.
-          </p>
+          <p className="mt-5 text-white/75 text-lg max-w-xl">{c.paragraph}</p>
 
           <div className="mt-10 space-y-5">
-            <a
-              href="tel:+918807209964"
-              className="flex items-start gap-4 group"
-            >
+            <a href={telHref} className="flex items-start gap-4 group">
               <div className="size-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center group-hover:bg-accent-500/20 group-hover:border-accent-400 transition-colors shrink-0">
                 <Phone className="size-5 text-accent-400" />
               </div>
@@ -45,16 +43,17 @@ export default function CTA() {
                   Call / WhatsApp
                 </div>
                 <div className="font-display text-lg md:text-xl font-semibold">
-                  +91 88072 09964
+                  {c.phones[0]}
                 </div>
                 <div className="text-sm text-white/70 mt-0.5">
-                  +91 74182 77664 · B. Madeshwaran
+                  {c.phones.slice(1).join(" · ")}
+                  {c.contactPerson ? ` · ${c.contactPerson}` : ""}
                 </div>
               </div>
             </a>
 
             <a
-              href="mailto:iconconveyors@gmail.com"
+              href={"mailto:" + (c.emails[0] || "")}
               className="flex items-start gap-4 group"
             >
               <div className="size-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center group-hover:bg-accent-500/20 group-hover:border-accent-400 transition-colors shrink-0">
@@ -65,16 +64,18 @@ export default function CTA() {
                   Email
                 </div>
                 <div className="font-display text-lg md:text-xl font-semibold break-all">
-                  iconconveyors@gmail.com
+                  {c.emails[0]}
                 </div>
-                <div className="text-sm text-white/70 mt-0.5 break-all">
-                  info@iconconveyor.com
-                </div>
+                {c.emails[1] && (
+                  <div className="text-sm text-white/70 mt-0.5 break-all">
+                    {c.emails[1]}
+                  </div>
+                )}
               </div>
             </a>
 
             <a
-              href="https://maps.google.com/?q=Bodipalayam+Post+Seerapalayam+Madukkarai+Coimbatore+641105"
+              href={`https://maps.google.com/?q=${encodeURIComponent(c.mapEmbedQuery)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-start gap-4 group"
@@ -87,12 +88,15 @@ export default function CTA() {
                   Plant & Office
                 </div>
                 <div className="font-display text-base md:text-lg font-semibold">
-                  S.F.No. 109/1A, 1B, Bodipalayam Post
+                  {c.addressTitle}
                 </div>
                 <div className="text-sm text-white/70">
-                  Near Vedanta Academy, Seerapalayam,
-                  <br />
-                  Madukkarai, Coimbatore — 641105, Tamil Nadu, India
+                  {c.addressLines.map((line, i) => (
+                    <span key={i}>
+                      {line}
+                      {i < c.addressLines.length - 1 && <br />}
+                    </span>
+                  ))}
                 </div>
               </div>
             </a>
@@ -106,11 +110,9 @@ export default function CTA() {
                   GSTIN
                 </div>
                 <div className="font-display text-lg font-semibold tracking-wider">
-                  33BXBPM6357D1ZN
+                  {c.gstin}
                 </div>
-                <div className="text-xs text-white/55 mt-0.5">
-                  ISO 9001:2015 Certified Company
-                </div>
+                <div className="text-xs text-white/55 mt-0.5">{c.iso}</div>
               </div>
             </div>
           </div>
@@ -118,7 +120,7 @@ export default function CTA() {
           {/* Map embed */}
           <div className="mt-8 rounded-2xl overflow-hidden border border-white/10 aspect-[16/9]">
             <iframe
-              src="https://www.google.com/maps?q=Madukkarai,+Coimbatore,+Tamil+Nadu+641105&output=embed"
+              src={mapSrc}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               className="w-full h-full"
@@ -208,7 +210,7 @@ export default function CTA() {
           </motion.button>
 
           <a
-            href="https://wa.me/918807209964?text=Hi%20Icon%20Conveyors%2C%20I%27d%20like%20a%20quote%20for"
+            href={waHref}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-3 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] hover:bg-[#1ebe57] text-white font-bold px-6 py-3 transition-colors"

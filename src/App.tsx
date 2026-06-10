@@ -1,3 +1,4 @@
+import { ContentProvider } from "./data/ContentContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import ClientsMarquee from "./components/ClientsMarquee";
@@ -16,24 +17,26 @@ import ScrollProgress from "./components/ScrollProgress";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white text-brand-900 overflow-x-hidden">
-      <ScrollProgress />
-      <Navbar />
-      <main>
-        <Hero />
-        <Stats />
-        <About />
-        <Products />
-        <Industries />
-        <WhyChoose />
-        <QualityWarranty />
-        <Process />
-        <ClientsMarquee />
-        <Testimonials />
-        <CTA />
-      </main>
-      <Footer />
-      <WhatsappFloat />
-    </div>
+    <ContentProvider>
+      <div className="min-h-screen bg-white text-brand-900 overflow-x-hidden">
+        <ScrollProgress />
+        <Navbar />
+        <main>
+          <Hero />
+          <Stats />
+          <About />
+          <Products />
+          <Industries />
+          <WhyChoose />
+          <QualityWarranty />
+          <Process />
+          <ClientsMarquee />
+          <Testimonials />
+          <CTA />
+        </main>
+        <Footer />
+        <WhatsappFloat />
+      </div>
+    </ContentProvider>
   );
 }

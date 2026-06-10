@@ -7,47 +7,25 @@ import {
   Truck,
   Wheat,
 } from "lucide-react";
+import { useContent } from "../data/ContentContext";
 
-const items = [
-  {
-    icon: Utensils,
-    title: "Food Processing",
-    desc: "Hygienic SS belt, modular belt and slat-chain conveyors for bakeries, dairies, poultry and ready-meal lines.",
-    color: "from-rose-500/20 to-rose-700/0",
-  },
-  {
-    icon: Package,
-    title: "Packaging",
-    desc: "Roller, modular belt, bagging machines and gross weighers feeding pack-out, sealing and palletising stations.",
-    color: "from-amber-500/20 to-amber-700/0",
-  },
-  {
-    icon: Factory,
-    title: "Manufacturing",
-    desc: "Assembly-line conveyors, slat-chain and aluminium-profile belts engineered for high-volume production floors.",
-    color: "from-sky-500/20 to-sky-700/0",
-  },
-  {
-    icon: Cog,
-    title: "Engineering",
-    desc: "Custom material-handling solutions for foundry, automotive, machine-shop and heavy engineering plants.",
-    color: "from-emerald-500/20 to-emerald-700/0",
-  },
-  {
-    icon: Truck,
-    title: "Material Handling",
-    desc: "Truck loading, bag stacker, bucket elevators and segregation lines for warehouses and logistics hubs.",
-    color: "from-violet-500/20 to-violet-700/0",
-  },
-  {
-    icon: Wheat,
-    title: "Agriculture & Allied",
-    desc: "Cleated and screw conveyors moving grain, seed, feed and fertiliser at farm-to-mill scale.",
-    color: "from-lime-500/20 to-lime-700/0",
-  },
+const icons = [Utensils, Package, Factory, Cog, Truck, Wheat];
+const colors = [
+  "from-rose-500/20 to-rose-700/0",
+  "from-amber-500/20 to-amber-700/0",
+  "from-sky-500/20 to-sky-700/0",
+  "from-emerald-500/20 to-emerald-700/0",
+  "from-violet-500/20 to-violet-700/0",
+  "from-lime-500/20 to-lime-700/0",
 ];
 
 export default function Industries() {
+  const c = useContent().industries;
+  const items = c.items.map((it, i) => ({
+    ...it,
+    icon: icons[i % icons.length],
+    color: colors[i % colors.length],
+  }));
   return (
     <section
       id="industries"
@@ -64,7 +42,7 @@ export default function Industries() {
             viewport={{ once: true }}
             className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/15 px-4 py-1.5 text-sm font-semibold text-white"
           >
-            Industries We Serve
+            {c.badge}
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -73,12 +51,11 @@ export default function Industries() {
             transition={{ delay: 0.1 }}
             className="mt-5 font-display text-3xl md:text-5xl font-bold leading-tight"
           >
-            One conveyor partner.{" "}
-            <span className="text-accent-400">Every industry.</span>
+            {c.headingLead}{" "}
+            <span className="text-accent-400">{c.headingHighlight}</span>
           </motion.h2>
           <p className="mt-5 text-brand-100/80 text-lg max-w-2xl">
-            From food-grade hygiene to heavy-engineering durability — we
-            engineer the right machine for the right floor.
+            {c.subheading}
           </p>
         </div>
 

@@ -1,30 +1,14 @@
 import { motion } from "framer-motion";
 import { BadgeCheck, ShieldCheck, Clock } from "lucide-react";
+import { useContent } from "../data/ContentContext";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const cards = [
-  {
-    icon: BadgeCheck,
-    title: "Quality Policy",
-    text: "We deliver products and services that meet or exceed customer expectations — strict quality control at every stage of production, ISO compliance, and continuous improvement in process, technology and workforce skills.",
-    badge: "ISO Certified",
-  },
-  {
-    icon: Clock,
-    title: "10+ Years Experience",
-    text: "Over ten years designing, manufacturing, supplying and installing industrial material-handling systems and conveyor solutions — projects executed reliably across food, packaging, manufacturing and engineering sectors.",
-    badge: "Since 2017",
-  },
-  {
-    icon: ShieldCheck,
-    title: "One-Year Warranty",
-    text: "Every product carries a one-year warranty against manufacturing defects and workmanship under normal operating conditions. Any proven defect is repaired or replaced as per company policy.",
-    badge: "12 Months",
-  },
-];
+const icons = [BadgeCheck, Clock, ShieldCheck];
 
 export default function QualityWarranty() {
+  const c = useContent().quality;
+  const cards = c.cards.map((card, i) => ({ ...card, icon: icons[i % icons.length] }));
   return (
     <section className="relative py-20 md:py-28 bg-white">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
@@ -36,7 +20,7 @@ export default function QualityWarranty() {
             transition={{ duration: 0.5, ease: EASE }}
             className="inline-flex items-center gap-2 rounded-full bg-brand-50 border border-brand-100 px-4 py-1.5 text-sm font-semibold text-brand-700"
           >
-            Quality · Experience · Warranty
+            {c.badge}
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -45,8 +29,8 @@ export default function QualityWarranty() {
             transition={{ duration: 0.6, delay: 0.05, ease: EASE }}
             className="mt-5 font-display text-3xl md:text-5xl font-bold text-brand-900 leading-[1.1] tracking-tight"
           >
-            Built to a standard you can{" "}
-            <span className="text-brand-500">depend on.</span>
+            {c.headingLead}{" "}
+            <span className="text-brand-500">{c.headingHighlight}</span>
           </motion.h2>
         </div>
 

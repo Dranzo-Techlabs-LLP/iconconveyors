@@ -2,10 +2,12 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight, PlayCircle, Sparkles } from "lucide-react";
 import IsometricConveyor from "./IsometricConveyor";
+import { useContent } from "../data/ContentContext";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function Hero() {
+  const c = useContent().hero;
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -35,7 +37,7 @@ export default function Hero() {
             className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/70 backdrop-blur px-4 py-1.5 text-sm font-medium text-brand-700 shadow-soft"
           >
             <Sparkles className="size-4 text-accent-500" />
-            ISO 9001:2015 Certified · Coimbatore · Est. 2017
+            {c.badge}
           </motion.div>
 
           <motion.h1
@@ -44,10 +46,10 @@ export default function Hero() {
             transition={{ duration: 0.75, delay: 0.08, ease: EASE }}
             className="mt-6 font-display text-[2.4rem] md:text-5xl lg:text-[3.75rem] font-bold leading-[1.04] tracking-tight text-brand-900"
           >
-            Optimising your{" "}
+            {c.titleLine1}{" "}
             <span className="relative inline-block">
               <span className="relative z-10 bg-gradient-to-r from-brand-700 via-brand-500 to-accent-500 bg-clip-text text-transparent">
-                material flow
+                {c.titleHighlight}
               </span>
               <motion.span
                 initial={{ scaleX: 0 }}
@@ -57,7 +59,7 @@ export default function Hero() {
               />
             </span>
             <br />
-            with industrial conveyors.
+            {c.titleLine2}
           </motion.h1>
 
           <motion.p
@@ -66,10 +68,7 @@ export default function Hero() {
             transition={{ duration: 0.65, delay: 0.2, ease: EASE }}
             className="mt-6 text-base md:text-lg text-brand-800/75 max-w-xl leading-relaxed"
           >
-            Trusted manufacturer of belt, screw, roller, slat-chain, bucket,
-            loading and packaging conveyors. Engineered in our Coimbatore plant
-            for food processing, packaging, manufacturing, engineering and
-            material-handling industries.
+            {c.paragraph}
           </motion.p>
 
           <motion.div
@@ -82,7 +81,7 @@ export default function Hero() {
               href="#products"
               className="group inline-flex items-center gap-2 rounded-full bg-brand-700 hover:bg-brand-600 text-white font-semibold px-7 py-3.5 shadow-glow transition-colors"
             >
-              Explore Products
+              {c.primaryCta}
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a
@@ -90,7 +89,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur border border-brand-200 hover:border-brand-400 text-brand-800 font-semibold px-6 py-3.5 transition-colors"
             >
               <PlayCircle className="size-5 text-accent-500" />
-              Get a Quote
+              {c.secondaryCta}
             </a>
           </motion.div>
 
@@ -103,11 +102,7 @@ export default function Hero() {
             }}
             className="mt-10 grid grid-cols-3 gap-6 max-w-md"
           >
-            {[
-              { k: "10+ Yrs", v: "Experience" },
-              { k: "5000+", v: "Projects" },
-              { k: "ISO", v: "Certified" },
-            ].map((s) => (
+            {c.stats.map((s) => (
               <motion.div
                 key={s.v}
                 variants={{

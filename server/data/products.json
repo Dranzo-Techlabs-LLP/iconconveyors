@@ -1,0 +1,239 @@
+[
+  {
+    "id": "double-head-bagging-machine",
+    "title": "Double Head Bagging Machine",
+    "desc": "High-speed dual-head system for accurate weighing, simultaneous bag filling and higher productivity.",
+    "img": "/products/double-head-bagging.jpg",
+    "category": "Packaging",
+    "tag": "High Speed"
+  },
+  {
+    "id": "gross-weigher-machine",
+    "title": "Gross Weigher Machine",
+    "desc": "Accurate weighing and filling machine to pack bulk material directly into bags with efficiency and consistency.",
+    "img": "/products/gross-weigher.png",
+    "category": "Packaging"
+  },
+  {
+    "id": "aluminium-belt-conveyor",
+    "title": "Aluminium Belt Conveyor",
+    "desc": "Lightweight modular aluminium profile frame for smooth, efficient material handling and quick customisation.",
+    "img": "/products/aluminium-belt.jpg",
+    "category": "Belt",
+    "tag": "Modular"
+  },
+  {
+    "id": "cleated-belt-conveyor",
+    "title": "Cleated Belt Conveyor",
+    "desc": "Raised cleats on the belt move materials up steep inclines without sliding or spillage.",
+    "img": "/products/cleated-belt.jpg",
+    "category": "Belt",
+    "tag": "Incline",
+    "video": "https://youtu.be/1y48s9SY_Rs"
+  },
+  {
+    "id": "side-wall-cleated-conveyor",
+    "title": "Side Wall Cleated Conveyor",
+    "desc": "Flexible sidewalls plus cleats deliver spillage-free handling of bulk material at steep or vertical angles.",
+    "img": "/products/sidewall-cleated.jpg",
+    "category": "Belt",
+    "tag": "Vertical"
+  },
+  {
+    "id": "modular-belt-conveyor",
+    "title": "Modular Belt Conveyor",
+    "desc": "Exceptional flexibility for hygienic food, pharma and manufacturing lines — modular plastic belt with easy section replacement.",
+    "img": "/products/modular-belt.jpg",
+    "category": "Belt",
+    "tag": "Food Grade"
+  },
+  {
+    "id": "inclined-belt-conveyor",
+    "title": "Inclined Belt Conveyor",
+    "desc": "Sidewalls and cleats for secure, efficient transport of bulk material at steep angles without spillage.",
+    "img": "/products/inclined-belt.jpg",
+    "category": "Belt",
+    "video": "https://youtu.be/maaUjHvdSTo"
+  },
+  {
+    "id": "ss-belt-conveyor",
+    "title": "SS Belt Conveyor",
+    "desc": "Stainless-steel frame and belt — hygienic, corrosion-resistant, ideal for food, pharma and cleanroom applications.",
+    "img": "/products/ss-belt.jpg",
+    "category": "Belt",
+    "tag": "SS 304/316"
+  },
+  {
+    "id": "screw-conveyor",
+    "title": "Screw Conveyor",
+    "desc": "Helical design for efficient, enclosed transport of bulk material in horizontal, inclined or vertical layouts.",
+    "img": "/products/screw-conveyor.png",
+    "category": "Screw",
+    "video": "https://youtu.be/aQP6mVzEKuE"
+  },
+  {
+    "id": "inclined-screw-conveyor",
+    "title": "Inclined Screw Conveyor",
+    "desc": "Enclosed helical transport of bulk material at upward angles — sealed against dust and spillage.",
+    "img": "/products/inclined-screw.jpg",
+    "category": "Screw"
+  },
+  {
+    "id": "u-trough-screw-conveyor",
+    "title": "U-Trough Screw Conveyor",
+    "desc": "Robust U-trough construction for smooth, efficient handling of bulk material in horizontal or slight incline.",
+    "img": "/products/u-trough-screw.jpg",
+    "category": "Screw"
+  },
+  {
+    "id": "pipe-type-screw-conveyor",
+    "title": "Pipe Type Screw Conveyor",
+    "desc": "Sealed tubular design for safe, dust-free, efficient transport — horizontal, inclined or vertical.",
+    "img": "/products/pipe-screw.jpg",
+    "category": "Screw",
+    "tag": "Dust-Free"
+  },
+  {
+    "id": "gravity-roller-conveyor",
+    "title": "Gravity Roller Conveyor",
+    "desc": "Simple, cost-effective free-rolling design for smooth manual movement of goods in horizontal or inclined setups.",
+    "img": "/products/gravity-roller.jpg",
+    "category": "Roller"
+  },
+  {
+    "id": "motorized-roller-conveyor",
+    "title": "Motorized Roller Conveyor",
+    "desc": "Powered rollers for efficient, automated and controlled movement of goods — reliable material handling.",
+    "img": "/products/motorized-roller.jpg",
+    "category": "Roller",
+    "tag": "Powered"
+  },
+  {
+    "id": "flexible-roller-conveyor",
+    "title": "Flexible Roller Conveyor",
+    "desc": "Extendable, bendable design moves goods around dynamic spaces and adaptable workflows.",
+    "img": "/products/flexible-roller.jpg",
+    "category": "Roller",
+    "tag": "Extendable",
+    "video": "https://youtu.be/GC18ZJyfZN0"
+  },
+  {
+    "id": "drag-chain-conveyor",
+    "title": "Drag Chain Conveyor",
+    "desc": "Rugged design uses heavy-duty chains for reliable handling of bulk material in horizontal or inclined runs.",
+    "img": "/products/drag-chain.jpg",
+    "category": "Chain"
+  },
+  {
+    "id": "ss-slat-chain-conveyor",
+    "title": "SS Slat Chain Conveyor",
+    "desc": "Stainless-steel slat chain for hygienic, durable, smooth transport of heavy loads in food, pharma and packaging.",
+    "img": "/products/ss-slat-chain.jpg",
+    "category": "Chain",
+    "tag": "SS Hygienic",
+    "video": "https://youtu.be/bRdhbXH6mEk"
+  },
+  {
+    "id": "vertical-continuous-chain-conveyor",
+    "title": "Vertical Continuous Chain Conveyor",
+    "desc": "Robust vertical continuous chain conveyor for space-saving, reliable vertical movement in continuous operations.",
+    "img": "/products/vertical-chain.jpg",
+    "category": "Chain",
+    "tag": "Space-Saving"
+  },
+  {
+    "id": "ms-slat-chain-conveyor",
+    "title": "MS Slat Chain Conveyor",
+    "desc": "Sturdy mild-steel slat chain for durable, efficient and smooth transport of heavy industrial loads.",
+    "img": "/products/ms-slat-chain.jpg",
+    "category": "Chain",
+    "video": "https://youtu.be/U40q8TWQ-4Y"
+  },
+  {
+    "id": "truck-loading-conveyor",
+    "title": "Truck Loading Conveyor",
+    "desc": "Flexible, extendable design for quick, efficient and safe loading or unloading — cuts manual effort and turnaround time.",
+    "img": "/products/truck-loading.jpg",
+    "category": "Loading",
+    "tag": "Logistics",
+    "video": "https://youtu.be/_JZjS8YqKLI"
+  },
+  {
+    "id": "bag-stacker-conveyor",
+    "title": "Bag Stacker Conveyor",
+    "desc": "Movable, height-adjustable conveyor for efficient stacking and handling of bags at varying heights.",
+    "img": "/products/bag-stacker.jpg",
+    "category": "Loading"
+  },
+  {
+    "id": "ribbon-mixing-blender",
+    "title": "Ribbon Mixing Blender",
+    "desc": "Helical ribbons for fast, uniform mixing of powders, granules and bulk materials across industries.",
+    "img": "/products/ribbon-blender.jpg",
+    "category": "Specialty",
+    "tag": "Blender"
+  },
+  {
+    "id": "assembly-line-conveyor",
+    "title": "Assembly Line Conveyor",
+    "desc": "Smooth product flow that boosts efficiency and productivity across manufacturing assembly processes.",
+    "img": "/products/assembly-line.jpg",
+    "category": "Specialty"
+  },
+  {
+    "id": "90-curve-conveyor",
+    "title": "90° Curve Conveyor",
+    "desc": "Space-saving curve design for smooth, efficient product transfer around corners in material handling systems.",
+    "img": "/products/90-curve.jpg",
+    "category": "Specialty"
+  },
+  {
+    "id": "z-type-conveyor",
+    "title": "Z-Type Conveyor",
+    "desc": "Cleated belt Z-design for efficient vertical and horizontal transfer of bulk material in limited floor space.",
+    "img": "/products/z-type.png",
+    "category": "Specialty",
+    "tag": "Compact",
+    "video": "https://youtu.be/4mJN7FZXdlA"
+  },
+  {
+    "id": "bucket-elevator",
+    "title": "Bucket Elevator",
+    "desc": "Vertical bucket design for efficient lifting and continuous transport of grains, powders and granules.",
+    "img": "/products/bucket-elevator.png",
+    "category": "Loading",
+    "tag": "Vertical Lift"
+  },
+  {
+    "id": "automatic-segregation-conveyor",
+    "title": "Automatic Segregation Conveyor",
+    "desc": "Streamlined sorting and segregation for efficient product separation and material handling automation.",
+    "img": "/products/segregation.jpg",
+    "category": "Specialty",
+    "tag": "Smart Sort",
+    "video": "https://youtu.be/B5p7TW_8_XA"
+  },
+  {
+    "id": "single-head-bagging-machine",
+    "title": "Single Head Bagging Machine",
+    "desc": "Compact single-head design for fast, accurate, efficient filling and packaging of bulk material bags.",
+    "img": "/products/single-head-bagging.png",
+    "category": "Packaging"
+  },
+  {
+    "id": "auger-filler-with-ffs-machine",
+    "title": "Auger Filler with FFS Machine",
+    "desc": "Form-fill-seal packaging plus auger filler for precise filling of powders and granules in one efficient system.",
+    "img": "/products/auger-ffs.png",
+    "category": "Packaging",
+    "tag": "FFS"
+  },
+  {
+    "id": "triple-head-bagging-machine",
+    "title": "Triple Head Bagging Machine",
+    "desc": "High-speed triple-head design for fast, accurate, simultaneous filling of multiple bags in bulk packaging.",
+    "img": "/products/triple-head-bagging.jpg",
+    "category": "Packaging",
+    "tag": "Max Throughput"
+  }
+]

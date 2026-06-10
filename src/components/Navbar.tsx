@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
+import { useContent } from "../data/ContentContext";
 
 const links = [
   { label: "Home", href: "#home" },
@@ -12,6 +13,8 @@ const links = [
 ];
 
 export default function Navbar() {
+  const phone = useContent().contact.phones[0] || "";
+  const phoneHref = "tel:" + phone.replace(/[^0-9+]/g, "");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -58,10 +61,10 @@ export default function Navbar() {
 
         <div className="hidden lg:flex items-center gap-3">
           <a
-            href="tel:+918807209964"
+            href={phoneHref}
             className="flex items-center gap-2 text-sm font-medium text-brand-800 hover:text-brand-500"
           >
-            <Phone className="size-4" /> +91 88072 09964
+            <Phone className="size-4" /> {phone}
           </a>
           <motion.a
             href="#contact"

@@ -1,81 +1,27 @@
 import { motion } from "framer-motion";
+import { useContent } from "../data/ContentContext";
 
-const clients = [
-  {
-    name: "Kanan Devan Hills Tea Plantation",
-    short: "KDHP",
-    sub: "Munnar · Tea Plantations",
-    color: "from-emerald-600 to-emerald-800",
-  },
-  {
-    name: "Tamil Nadu Newsprint & Papers",
-    short: "TNPL",
-    sub: "Paper & Newsprint",
-    color: "from-green-600 to-green-800",
-  },
-  {
-    name: "Pricol Pvt Ltd",
-    short: "PRICOL",
-    sub: "Automotive Components",
-    color: "from-slate-700 to-slate-900",
-  },
-  {
-    name: "ST Courier",
-    short: "ST",
-    sub: "Logistics & Courier",
-    color: "from-red-600 to-red-800",
-  },
-  {
-    name: "Saint-Gobain",
-    short: "SG",
-    sub: "Glass & Materials",
-    color: "from-blue-700 to-indigo-900",
-  },
-  {
-    name: "Suguna Foods",
-    short: "SUGUNA",
-    sub: "Poultry & Food",
-    color: "from-orange-600 to-red-700",
-  },
-  {
-    name: "ISF Pvt Ltd",
-    short: "ISF",
-    sub: "Industrial Solutions",
-    color: "from-rose-600 to-rose-800",
-  },
-  {
-    name: "ELGI Rubber",
-    short: "ELGI",
-    sub: "Rubber & Equipment",
-    color: "from-zinc-700 to-zinc-900",
-  },
-  {
-    name: "IIT Chennai",
-    short: "IIT-M",
-    sub: "Research & Academia",
-    color: "from-sky-700 to-blue-900",
-  },
-  {
-    name: "Tube Investments of India",
-    short: "TII",
-    sub: "Engineering · Murugappa",
-    color: "from-cyan-700 to-teal-900",
-  },
-  {
-    name: "Murugappa Group",
-    short: "MURUGAPPA",
-    sub: "Diversified Conglomerate",
-    color: "from-amber-700 to-orange-900",
-  },
-  {
-    name: "C.R.I Pumps",
-    short: "CRI",
-    sub: "Pumps & Motors",
-    color: "from-indigo-700 to-violet-900",
-  },
+const palette = [
+  "from-emerald-600 to-emerald-800",
+  "from-green-600 to-green-800",
+  "from-slate-700 to-slate-900",
+  "from-red-600 to-red-800",
+  "from-blue-700 to-indigo-900",
+  "from-orange-600 to-red-700",
+  "from-rose-600 to-rose-800",
+  "from-zinc-700 to-zinc-900",
+  "from-sky-700 to-blue-900",
+  "from-cyan-700 to-teal-900",
+  "from-amber-700 to-orange-900",
+  "from-indigo-700 to-violet-900",
 ];
 
 export default function ClientsMarquee() {
+  const c = useContent().clients;
+  const clients = c.items.map((cl, i) => ({
+    ...cl,
+    color: palette[i % palette.length],
+  }));
   return (
     <section id="clients" className="border-y border-brand-100 bg-gradient-to-b from-white to-brand-50/40 py-16 md:py-20">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
@@ -86,10 +32,10 @@ export default function ClientsMarquee() {
           className="text-center max-w-2xl mx-auto"
         >
           <p className="text-sm tracking-widest text-brand-500 uppercase font-semibold">
-            Our Customers
+            {c.eyebrow}
           </p>
           <h2 className="mt-3 font-display text-2xl md:text-4xl font-bold text-brand-900">
-            Trusted by industry leaders across India
+            {c.heading}
           </h2>
         </motion.div>
 

@@ -7,43 +7,15 @@ import {
   Ruler,
   Gauge,
 } from "lucide-react";
+import { useContent } from "../data/ContentContext";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const reasons = [
-  {
-    icon: Settings2,
-    title: "Custom Engineering",
-    text: "Every conveyor is sized to your material, throughput and floor — no off-the-shelf compromise.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Built to Last",
-    text: "Heavy-gauge frames, premium pulleys and food-grade or abrasion-grade belt options for every application.",
-  },
-  {
-    icon: Gauge,
-    title: "Low Maintenance",
-    text: "Smart access panels, sealed bearings and modular sections reduce downtime to a minimum.",
-  },
-  {
-    icon: Ruler,
-    title: "Precise Installation",
-    text: "Site survey, fabrication, install and commissioning handled end-to-end by our in-house team.",
-  },
-  {
-    icon: Truck,
-    title: "Pan-India Delivery",
-    text: "Dispatch from Coimbatore to every state with logistics and on-site rigging support.",
-  },
-  {
-    icon: Headphones,
-    title: "Lifetime Support",
-    text: "AMC contracts, rapid spares and an engineer-on-call for every system we ship.",
-  },
-];
+const icons = [Settings2, ShieldCheck, Gauge, Ruler, Truck, Headphones];
 
 export default function WhyChoose() {
+  const c = useContent().whyChoose;
+  const reasons = c.items.map((r, i) => ({ ...r, icon: icons[i % icons.length] }));
   return (
     <section id="why" className="relative py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
@@ -55,7 +27,7 @@ export default function WhyChoose() {
             transition={{ duration: 0.5, ease: EASE }}
             className="inline-flex items-center gap-2 rounded-full bg-brand-50 border border-brand-100 px-4 py-1.5 text-sm font-semibold text-brand-700"
           >
-            Why Icon Conveyors
+            {c.badge}
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -64,8 +36,8 @@ export default function WhyChoose() {
             transition={{ duration: 0.6, delay: 0.05, ease: EASE }}
             className="mt-5 font-display text-3xl md:text-5xl font-bold text-brand-900 leading-[1.1] tracking-tight"
           >
-            Six reasons plants across India{" "}
-            <span className="text-brand-500">trust our line.</span>
+            {c.headingLead}{" "}
+            <span className="text-brand-500">{c.headingHighlight}</span>
           </motion.h2>
         </div>
 
