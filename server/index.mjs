@@ -78,9 +78,20 @@ function validateProduct(body, { partial = false } = {}) {
     if (!CATEGORIES.includes(body.category)) errors.push(`Category must be one of: ${CATEGORIES.join(", ")}`);
     else out.category = body.category;
   }
-  if (!partial || body.img !== undefined) {
-    if (typeof body.img !== "string" || !body.img.trim()) errors.push("Image is required — upload one");
-    else out.img = body.img.trim();
+  if (!partial || body.images !== undefined || body.img !== undefined) {
+    let images = Array.isArray(body.images)
+      ? body.images.filter((x) => typeof x === "string" && x.trim()).map((x) => x.trim())
+      : [];
+    if (!images.length && typeof body.img === "string" && body.img.trim())
+      images = [body.img.trim()];
+    if (body.images !== undefined || body.img !== undefined) {
+      if (!images.length) {
+        if (!partial) errors.push("At least one image is required — upload one");
+      } else {
+        out.images = images;
+        out.img = images[0]; // keep img in sync as the primary image
+      }
+    }
   }
   if (body.tag !== undefined) out.tag = String(body.tag).trim() || undefined;
   if (body.video !== undefined) {

@@ -6,12 +6,61 @@ import {
   CATEGORIES,
   defaultProducts,
   fetchProducts,
+  productImages,
   type Category,
   type Product,
 } from "../data/products";
 
 type Filter = "All" | Category;
 const filters: Filter[] = ["All", ...CATEGORIES];
+
+// Auto-playing crossfade slider for a product's gallery.
+function ProductGallery({ images, title }: { images: string[]; title: string }) {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const t = setInterval(
+      () => setIdx((v) => (v + 1) % images.length),
+      3200
+    );
+    return () => clearInterval(t);
+  }, [images.length]);
+  return (
+    <>
+      <div className="absolute inset-0 transition-transform duration-[900ms] ease-out group-hover:scale-105">
+        {images.map((src, i) => (
+          <img
+            key={src + i}
+            src={src}
+            alt={title}
+            loading="lazy"
+            className={`absolute inset-0 w-full h-full object-contain p-3 transition-opacity duration-700 ${
+              i === idx ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+      </div>
+      {images.length > 1 && (
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10 flex gap-1.5">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              aria-label={`Show image ${i + 1}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIdx(i);
+              }}
+              className={`size-1.5 rounded-full transition-colors ${
+                i === idx ? "bg-accent-500" : "bg-white/70 hover:bg-white"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </>
+  );
+}
 
 export default function Products() {
   const [items, setItems] = useState<Product[]>(defaultProducts);
@@ -132,12 +181,7 @@ export default function Products() {
                 className="group relative overflow-hidden rounded-2xl bg-white border border-brand-100 shadow-soft hover:shadow-[0_28px_60px_-22px_rgba(8,26,56,0.35)] transition-shadow"
               >
                 <div className="relative h-60 overflow-hidden bg-gradient-to-b from-white to-brand-50">
-                  <img
-                    src={p.img}
-                    alt={p.title}
-                    loading="lazy"
-                    className="w-full h-full object-contain p-3 transition-transform duration-[900ms] ease-out group-hover:scale-105"
-                  />
+                  <ProductGallery images={productImages(p)} title={p.title} />
                   <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-brand-950/80 via-brand-900/20 to-transparent pointer-events-none" />
                   {p.tag && (
                     <span className="absolute top-3 left-3 text-[11px] font-bold uppercase tracking-wider bg-accent-500 text-brand-950 px-2.5 py-1 rounded-full shadow-md">

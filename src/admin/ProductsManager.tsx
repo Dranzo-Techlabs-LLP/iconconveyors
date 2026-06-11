@@ -1,11 +1,53 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, ImagePlus, Pencil, Plus, Trash2, X } from "lucide-react";
+import { ArrowUpRight, ImagePlus, Pencil, Plus, Star, Trash2, X } from "lucide-react";
 import { YoutubeIcon } from "../components/SocialIcons";
-import { CATEGORIES, type Category, type Product } from "../data/products";
+import { CATEGORIES, productImages, type Category, type Product } from "../data/products";
 import { api } from "./api";
 
-// Card identical to the public site card, used for the live preview.
-function PreviewCard({ p }: { p: Partial<Product> }) {
+// Auto-playing slider used in the live preview (mirrors the public card).
+function PreviewGallery({ images, title }: { images: string[]; title: string }) {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    setIdx(0);
+  }, [images.length]);
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const t = setInterval(() => setIdx((v) => (v + 1) % images.length), 2200);
+    return () => clearInterval(t);
+  }, [images.length]);
+  if (!images.length)
+    return (
+      <div className="w-full h-full flex items-center justify-center text-brand-300 text-sm">
+        Upload an image to preview
+      </div>
+    );
+  return (
+    <>
+      {images.map((src, i) => (
+        <img
+          key={src + i}
+          src={src}
+          alt={title}
+          className={`absolute inset-0 w-full h-full object-contain p-3 transition-opacity duration-500 ${
+            i === idx ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+      {images.length > 1 && (
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-10 flex gap-1.5">
+          {images.map((_, i) => (
+            <span
+              key={i}
+              className={`size-1.5 rounded-full ${i === idx ? "bg-accent-500" : "bg-white/70"}`}
+            />
+          ))}
+        </div>
+      )}
+    </>
+  );
+}
+
+function PreviewCard({ p }: { p: Partial<Product> & { images: string[] } }) {
   const [hover, setHover] = useState(false);
   return (
     <article
@@ -14,13 +56,7 @@ function PreviewCard({ p }: { p: Partial<Product> }) {
       className="relative overflow-hidden rounded-2xl bg-white border border-brand-100 shadow-soft w-full max-w-sm"
     >
       <div className="relative h-60 overflow-hidden bg-gradient-to-b from-white to-brand-50">
-        {p.img ? (
-          <img src={p.img} alt={p.title || "Product"} className="w-full h-full object-contain p-3" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-brand-300 text-sm">
-            Upload an image to preview
-          </div>
-        )}
+        <PreviewGallery images={p.images} title={p.title || "Product"} />
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-brand-950/80 via-brand-900/20 to-transparent pointer-events-none" />
         {p.tag && (
           <span className="absolute top-3 left-3 text-[11px] font-bold uppercase tracking-wider bg-accent-500 text-brand-950 px-2.5 py-1 rounded-full shadow-md">
@@ -75,9 +111,9 @@ type FormState = {
   category: Category;
   tag: string;
   video: string;
-  img: string;
+  images: string[];
 };
-const emptyForm: FormState = { title: "", desc: "", category: "Belt", tag: "", video: "", img: "" };
+const emptyForm: FormState = { title: "", desc: "", category: "Belt", tag: "", video: "", images: [] };
 
 function ProductForm({
   initial,
@@ -96,7 +132,7 @@ function ProductForm({
           category: initial.category,
           tag: initial.tag || "",
           video: initial.video || "",
-          img: initial.img,
+          images: productImages(initial),
         }
       : emptyForm
   );
@@ -109,19 +145,23 @@ function ProductForm({
     setForm((f) => ({ ...f, [k]: v }));
   }
 
-  async function uploadImage(file: File) {
+  async function uploadFiles(files: FileList) {
     setUploading(true);
     setError("");
     try {
-      const fd = new FormData();
-      fd.append("image", file);
-      const name = encodeURIComponent(form.title || file.name);
-      const data = await api<{ path: string }>(
-        `/api/upload?name=${name}`,
-        { method: "POST", body: fd },
-        false
-      );
-      set("img", data.path);
+      const added: string[] = [];
+      for (const file of Array.from(files)) {
+        const fd = new FormData();
+        fd.append("image", file);
+        const name = encodeURIComponent(form.title || file.name);
+        const data = await api<{ path: string }>(
+          `/api/upload?name=${name}`,
+          { method: "POST", body: fd },
+          false
+        );
+        added.push(data.path);
+      }
+      setForm((f) => ({ ...f, images: [...f.images, ...added] }));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upload failed");
     } finally {
@@ -129,8 +169,24 @@ function ProductForm({
     }
   }
 
+  function removeImage(i: number) {
+    setForm((f) => ({ ...f, images: f.images.filter((_, j) => j !== i) }));
+  }
+  function makePrimary(i: number) {
+    setForm((f) => {
+      const next = [...f.images];
+      const [img] = next.splice(i, 1);
+      next.unshift(img);
+      return { ...f, images: next };
+    });
+  }
+
   async function save(e: React.FormEvent) {
     e.preventDefault();
+    if (!form.images.length) {
+      setError("Please upload at least one image.");
+      return;
+    }
     setBusy(true);
     setError("");
     try {
@@ -140,7 +196,7 @@ function ProductForm({
         category: form.category,
         tag: form.tag,
         video: form.video,
-        img: form.img,
+        images: form.images,
       });
       if (initial) await api(`/api/products/${initial.id}`, { method: "PUT", body });
       else await api("/api/products", { method: "POST", body });
@@ -158,7 +214,7 @@ function ProductForm({
   return (
     <div className="fixed inset-0 z-50 bg-brand-950/60 backdrop-blur-sm flex items-start md:items-center justify-center overflow-y-auto p-4">
       <div className="w-full max-w-4xl rounded-3xl bg-brand-50 border border-brand-100 shadow-2xl my-8">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-brand-100 sticky top-0 bg-brand-50 rounded-t-3xl">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-brand-100 sticky top-0 bg-brand-50 rounded-t-3xl z-10">
           <h2 className="font-display text-xl font-bold text-brand-900">
             {initial ? `Edit — ${initial.title}` : "Add New Product"}
           </h2>
@@ -198,22 +254,58 @@ function ProductForm({
                 Paste a YouTube link — a "Watch video" button appears when visitors hover the product.
               </p>
             </div>
+
             <div>
-              <span className={label}>Product Image *</span>
-              <input ref={fileRef} type="file" accept="image/*" className="hidden"
+              <span className={label}>Product Images * (multiple — shown as a slider)</span>
+              <input
+                ref={fileRef}
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
                 onChange={(e) => {
-                  const f = e.target.files?.[0];
-                  if (f) uploadImage(f);
+                  if (e.target.files?.length) uploadFiles(e.target.files);
                   e.target.value = "";
                 }}
               />
+              {/* thumbnails */}
+              {form.images.length > 0 && (
+                <div className="grid grid-cols-4 gap-2 mb-2">
+                  {form.images.map((src, i) => (
+                    <div key={src + i} className="relative group rounded-lg overflow-hidden border border-brand-100 bg-white aspect-square">
+                      <img src={src} alt="" className="w-full h-full object-contain p-1" />
+                      {i === 0 && (
+                        <span className="absolute top-1 left-1 text-[8px] font-bold uppercase bg-accent-500 text-brand-950 px-1.5 py-0.5 rounded-full">
+                          Main
+                        </span>
+                      )}
+                      <div className="absolute inset-0 bg-brand-950/45 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1">
+                        {i !== 0 && (
+                          <button type="button" onClick={() => makePrimary(i)} title="Make main image"
+                            className="size-7 rounded-full bg-white/90 text-brand-700 flex items-center justify-center hover:bg-white">
+                            <Star className="size-3.5" />
+                          </button>
+                        )}
+                        <button type="button" onClick={() => removeImage(i)} title="Delete image"
+                          className="size-7 rounded-full bg-white/90 text-red-600 flex items-center justify-center hover:bg-white">
+                          <Trash2 className="size-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
               <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading}
-                className="w-full rounded-xl border-2 border-dashed border-brand-200 hover:border-brand-400 bg-white px-4 py-5 flex flex-col items-center gap-2 text-brand-600 transition-colors disabled:opacity-60">
+                className="w-full rounded-xl border-2 border-dashed border-brand-200 hover:border-brand-400 bg-white px-4 py-4 flex flex-col items-center gap-1.5 text-brand-600 transition-colors disabled:opacity-60">
                 <ImagePlus className="size-6" />
                 <span className="text-sm font-semibold">
-                  {uploading ? "Uploading…" : form.img ? "Replace image" : "Upload image (JPG / PNG / WebP)"}
+                  {uploading ? "Uploading…" : form.images.length ? "Add more images" : "Upload images (JPG / PNG / WebP)"}
                 </span>
-                {form.img && <span className="text-[11px] text-brand-700/60">{form.img}</span>}
+                <span className="text-[11px] text-brand-700/60">
+                  {form.images.length
+                    ? `${form.images.length} image${form.images.length > 1 ? "s" : ""} · first is the main image`
+                    : "You can select several at once"}
+                </span>
               </button>
             </div>
 
@@ -233,7 +325,9 @@ function ProductForm({
 
           <div>
             <span className={label}>Live Preview — how it appears on the site</span>
-            <p className="text-[11px] text-brand-700/60 mb-3">Hover the card to test the video button.</p>
+            <p className="text-[11px] text-brand-700/60 mb-3">
+              The card cycles through the images automatically. Hover to test the video button.
+            </p>
             <PreviewCard p={{ ...form, tag: form.tag || undefined, video: form.video || undefined }} />
           </div>
         </form>
@@ -299,35 +393,45 @@ export default function ProductsManager() {
       )}
 
       <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {shown.map((p) => (
-          <div key={p.id} className="rounded-2xl bg-white border border-brand-100 shadow-soft overflow-hidden flex flex-col">
-            <div className="relative h-40 bg-gradient-to-b from-white to-brand-50">
-              <img src={p.img} alt={p.title} className="w-full h-full object-contain p-2" />
-              <span className="absolute top-2 right-2 text-[10px] font-bold uppercase tracking-wider bg-brand-900/85 text-white px-2 py-0.5 rounded-full">
-                {p.category}
-              </span>
-              {p.video && (
-                <span className="absolute top-2 left-2 inline-flex items-center gap-1 text-[10px] font-bold bg-[#FF0000] text-white px-2 py-0.5 rounded-full">
-                  <YoutubeIcon className="size-3" /> VIDEO
+        {shown.map((p) => {
+          const imgs = productImages(p);
+          return (
+            <div key={p.id} className="rounded-2xl bg-white border border-brand-100 shadow-soft overflow-hidden flex flex-col">
+              <div className="relative h-40 bg-gradient-to-b from-white to-brand-50">
+                <img src={imgs[0]} alt={p.title} className="w-full h-full object-contain p-2" />
+                <span className="absolute top-2 right-2 text-[10px] font-bold uppercase tracking-wider bg-brand-900/85 text-white px-2 py-0.5 rounded-full">
+                  {p.category}
                 </span>
-              )}
-            </div>
-            <div className="p-4 flex-1 flex flex-col">
-              <h3 className="font-display font-bold text-brand-900 leading-snug">{p.title}</h3>
-              <p className="mt-1 text-xs text-brand-700/70 line-clamp-2 flex-1">{p.desc}</p>
-              <div className="mt-3 flex gap-2">
-                <button onClick={() => setEditing(p)}
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-full bg-brand-50 hover:bg-brand-100 border border-brand-100 text-brand-800 text-xs font-bold px-3 py-2 transition-colors">
-                  <Pencil className="size-3.5" /> Edit
-                </button>
-                <button onClick={() => remove(p)}
-                  className="inline-flex items-center justify-center gap-1.5 rounded-full bg-red-50 hover:bg-red-100 border border-red-100 text-red-700 text-xs font-bold px-3 py-2 transition-colors">
-                  <Trash2 className="size-3.5" /> Delete
-                </button>
+                <div className="absolute bottom-2 left-2 flex gap-1.5">
+                  {imgs.length > 1 && (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-brand-700 text-white px-2 py-0.5 rounded-full">
+                      {imgs.length} photos
+                    </span>
+                  )}
+                  {p.video && (
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-[#FF0000] text-white px-2 py-0.5 rounded-full">
+                      <YoutubeIcon className="size-3" /> VIDEO
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="p-4 flex-1 flex flex-col">
+                <h3 className="font-display font-bold text-brand-900 leading-snug">{p.title}</h3>
+                <p className="mt-1 text-xs text-brand-700/70 line-clamp-2 flex-1">{p.desc}</p>
+                <div className="mt-3 flex gap-2">
+                  <button onClick={() => setEditing(p)}
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-full bg-brand-50 hover:bg-brand-100 border border-brand-100 text-brand-800 text-xs font-bold px-3 py-2 transition-colors">
+                    <Pencil className="size-3.5" /> Edit
+                  </button>
+                  <button onClick={() => remove(p)}
+                    className="inline-flex items-center justify-center gap-1.5 rounded-full bg-red-50 hover:bg-red-100 border border-red-100 text-red-700 text-xs font-bold px-3 py-2 transition-colors">
+                    <Trash2 className="size-3.5" /> Delete
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {shown.length === 0 && !error && (

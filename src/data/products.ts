@@ -23,11 +23,18 @@ export type Product = {
   id: string;
   title: string;
   desc: string;
-  img: string;
+  img: string; // primary image (kept = images[0] for backward compatibility)
+  images?: string[]; // full gallery; shown as an auto slider on the card
   category: Category;
   tag?: string;
   video?: string;
 };
+
+// Resolve the gallery for a product — falls back to the single img.
+export function productImages(p: Product): string[] {
+  const list = (p.images && p.images.length ? p.images : [p.img]).filter(Boolean);
+  return list.length ? list : [p.img];
+}
 
 // Bundled snapshot — used until /api/products responds (and as the only
 // source when the site is deployed statically without the admin API).
