@@ -7,15 +7,18 @@
     "dev": "concurrently -k -n api,web -c green,cyan \"npm:server\" \"npm:web\"",
     "web": "vite",
     "server": "node server/index.mjs",
+    "db:setup": "node server/db-setup.mjs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.14.0",
     "multer": "^2.1.1",
+    "mysql2": "^3.22.5",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
   },

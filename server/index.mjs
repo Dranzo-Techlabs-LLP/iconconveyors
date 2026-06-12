@@ -1,12 +1,20 @@
 // Icon Conveyors admin API.
-// Persists products to server/data/products.json and saves uploaded
-// product images into public/products so the site serves them directly.
+// Storage: MySQL when DB_* env vars are set (.env), else the JSON files in
+// server/data. Uploaded images always go to public/products.
+import "dotenv/config";
 import express from "express";
 import multer from "multer";
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  dbEnabled,
+  readProductsDB,
+  writeProductsDB,
+  readContentDB,
+  writeContentDB,
+} from "./db.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_FILE = path.join(__dirname, "data", "products.json");
@@ -27,21 +35,26 @@ const tokens = new Map(); // token -> expiry epoch ms
 const app = express();
 app.use(express.json({ limit: "1mb" }));
 
-// ---------- helpers ----------
-function readProducts() {
+// ---------- storage (MySQL or JSON files) ----------
+function readProductsFile() {
   return JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
 }
-function writeProducts(list) {
+function writeProductsFile(list) {
   fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
   fs.writeFileSync(DATA_FILE, JSON.stringify(list, null, 2));
 }
-function readContent() {
+function readContentFile() {
   return JSON.parse(fs.readFileSync(CONTENT_FILE, "utf8"));
 }
-function writeContent(obj) {
+function writeContentFile(obj) {
   fs.mkdirSync(path.dirname(CONTENT_FILE), { recursive: true });
   fs.writeFileSync(CONTENT_FILE, JSON.stringify(obj, null, 2));
 }
+// Unified async storage API — routes await these regardless of backend.
+const readProducts = () => (dbEnabled ? readProductsDB() : readProductsFile());
+const writeProducts = (list) => (dbEnabled ? writeProductsDB(list) : writeProductsFile(list));
+const readContent = () => (dbEnabled ? readContentDB() : readContentFile());
+const writeContent = (obj) => (dbEnabled ? writeContentDB(obj) : writeContentFile(obj));
 // Deep-merge incoming patch onto existing content. Arrays are replaced wholesale
 // (so an edited list is saved exactly as sent), plain objects are merged by key.
 function deepMerge(base, patch) {
@@ -115,39 +128,46 @@ app.post("/api/login", (req, res) => {
   res.json({ token });
 });
 
-// ---------- site content ----------
-app.get("/api/content", (_req, res) => {
-  res.json(readContent());
-});
+// Wrap an async route so storage/DB errors become a clean 500.
+const wrap = (fn) => (req, res) =>
+  Promise.resolve(fn(req, res)).catch((e) => {
+    console.error("[api error]", e);
+    if (!res.headersSent) res.status(500).json({ error: "Server error: " + e.message });
+  });
 
-app.put("/api/content", auth, (req, res) => {
+// ---------- site content ----------
+app.get("/api/content", wrap(async (_req, res) => {
+  res.json(await readContent());
+}));
+
+app.put("/api/content", auth, wrap(async (req, res) => {
   if (!req.body || typeof req.body !== "object") {
     return res.status(400).json({ error: "Expected a content object" });
   }
-  const merged = deepMerge(readContent(), req.body);
-  writeContent(merged);
+  const merged = deepMerge(await readContent(), req.body);
+  await writeContent(merged);
   res.json(merged);
-});
+}));
 
 // ---------- products ----------
-app.get("/api/products", (_req, res) => {
-  res.json(readProducts());
-});
+app.get("/api/products", wrap(async (_req, res) => {
+  res.json(await readProducts());
+}));
 
-app.post("/api/products", auth, (req, res) => {
+app.post("/api/products", auth, wrap(async (req, res) => {
   const { errors, out } = validateProduct(req.body);
   if (errors.length) return res.status(400).json({ error: errors.join(". ") });
-  const list = readProducts();
+  const list = await readProducts();
   let id = slugify(out.title);
   while (list.some((p) => p.id === id)) id += "-2";
   const product = { id, ...out };
   list.push(product);
-  writeProducts(list);
+  await writeProducts(list);
   res.status(201).json(product);
-});
+}));
 
-app.put("/api/products/:id", auth, (req, res) => {
-  const list = readProducts();
+app.put("/api/products/:id", auth, wrap(async (req, res) => {
+  const list = await readProducts();
   const i = list.findIndex((p) => p.id === req.params.id);
   if (i === -1) return res.status(404).json({ error: "Product not found" });
   const { errors, out } = validateProduct(req.body, { partial: true });
@@ -156,30 +176,30 @@ app.put("/api/products/:id", auth, (req, res) => {
   list[i] = { ...list[i], ...out };
   if (req.body.tag === "" || req.body.tag === null) delete list[i].tag;
   if (req.body.video === "" || req.body.video === null) delete list[i].video;
-  writeProducts(list);
+  await writeProducts(list);
   res.json(list[i]);
-});
+}));
 
-app.delete("/api/products/:id", auth, (req, res) => {
-  const list = readProducts();
+app.delete("/api/products/:id", auth, wrap(async (req, res) => {
+  const list = await readProducts();
   const i = list.findIndex((p) => p.id === req.params.id);
   if (i === -1) return res.status(404).json({ error: "Product not found" });
   const [removed] = list.splice(i, 1);
-  writeProducts(list);
+  await writeProducts(list);
   res.json(removed);
-});
+}));
 
 // reorder: body = array of ids in the new order
-app.put("/api/products-order", auth, (req, res) => {
+app.put("/api/products-order", auth, wrap(async (req, res) => {
   const ids = req.body;
   if (!Array.isArray(ids)) return res.status(400).json({ error: "Expected an array of ids" });
-  const list = readProducts();
+  const list = await readProducts();
   const byId = new Map(list.map((p) => [p.id, p]));
   const next = ids.map((id) => byId.get(id)).filter(Boolean);
   for (const p of list) if (!ids.includes(p.id)) next.push(p);
-  writeProducts(next);
+  await writeProducts(next);
   res.json(next);
-});
+}));
 
 // ---------- image upload ----------
 const storage = multer.diskStorage({
@@ -217,5 +237,9 @@ app.post("/api/upload", auth, (req, res) => {
 app.use("/products", express.static(UPLOAD_DIR));
 
 app.listen(PORT, () => {
-  console.log(`[admin-api] listening on http://localhost:${PORT}`);
+  console.log(
+    `[admin-api] listening on http://localhost:${PORT} — storage: ${
+      dbEnabled ? `MySQL (${process.env.DB_NAME}@${process.env.DB_HOST})` : "JSON files"
+    }`
+  );
 });
